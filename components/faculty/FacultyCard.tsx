@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import {
   Star,
   Award,
@@ -13,6 +12,8 @@ import {
   Quote,
 } from 'lucide-react';
 import { Faculty } from '@/types';
+import { facultyImageUrl, FALLBACK_FACULTY_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface FacultyCardProps {
   faculty: Faculty;
@@ -49,12 +50,12 @@ export function FacultyCard({ faculty, index = 0, variant = 'default' }: Faculty
       >
         {/* Avatar */}
         <div className="relative w-14 h-14 rounded-full overflow-hidden bg-[var(--gray-100)] flex-shrink-0">
-          <Image
-            src={photoUrl || '/assests/sample_image_for_anything.png'}
+          <SafeImage
+            src={facultyImageUrl(photoUrl) || FALLBACK_FACULTY_URL}
+            fallbackSrc={FALLBACK_FACULTY_URL}
             alt={name}
             fill
             className="object-cover"
-            unoptimized={!!photoUrl}
           />
         </div>
 
@@ -107,12 +108,12 @@ export function FacultyCard({ faculty, index = 0, variant = 'default' }: Faculty
         <div className="grid md:grid-cols-2 gap-0">
           {/* Left: Photo */}
           <div className="relative h-64 md:h-full min-h-[300px] bg-gradient-to-br from-[var(--primary-50)] to-[var(--primary-100)]">
-            <Image
-              src={photoUrl || '/assests/sample_image_for_anything.png'}
+            <SafeImage
+              src={facultyImageUrl(photoUrl) || FALLBACK_FACULTY_URL}
+              fallbackSrc={FALLBACK_FACULTY_URL}
               alt={name}
               fill
               className="object-cover"
-              unoptimized={!!photoUrl}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
@@ -212,12 +213,12 @@ export function FacultyCard({ faculty, index = 0, variant = 'default' }: Faculty
         {/* Avatar */}
         <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
           <div className="relative w-20 h-20 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
-            <Image
-              src={photoUrl || '/assests/sample_image_for_anything.png'}
+            <SafeImage
+              src={facultyImageUrl(photoUrl) || FALLBACK_FACULTY_URL}
+              fallbackSrc={FALLBACK_FACULTY_URL}
               alt={name}
               fill
               className="object-cover group-hover:scale-110 transition-transform duration-300"
-              unoptimized={!!photoUrl}
             />
           </div>
         </div>

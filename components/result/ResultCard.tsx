@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import {
   Trophy,
   GraduationCap,
@@ -13,6 +12,8 @@ import {
   Target,
 } from 'lucide-react';
 import { Result, RankOrScoreType } from '@/types';
+import { FALLBACK_PERSON_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface ResultCardProps {
   result: Result;
@@ -79,8 +80,9 @@ export function ResultCard({ result, index = 0, variant = 'default', examTypeNam
             {/* Student Photo */}
             <div className="relative flex-shrink-0">
               <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-amber-200 overflow-hidden bg-white shadow-lg">
-                <Image
-                  src={studentPhotoUrl || '/assests/sample_image_for_anything.png'}
+                <SafeImage
+                  src={studentPhotoUrl || FALLBACK_PERSON_URL}
+                  fallbackSrc={FALLBACK_PERSON_URL}
                   alt={studentName}
                   fill
                   className="object-cover"
@@ -190,8 +192,9 @@ export function ResultCard({ result, index = 0, variant = 'default', examTypeNam
           {/* Student Photo */}
           <div className="relative flex-shrink-0">
             <div className="relative w-16 h-16 rounded-full overflow-hidden bg-[var(--gray-100)] border-2 border-[var(--gray-200)] group-hover:border-[var(--primary-300)] transition-colors">
-              <Image
-                src={studentPhotoUrl || '/assests/sample_image_for_anything.png'}
+              <SafeImage
+                src={studentPhotoUrl || FALLBACK_PERSON_URL}
+                fallbackSrc={FALLBACK_PERSON_URL}
                 alt={studentName}
                 fill
                 className="object-cover"

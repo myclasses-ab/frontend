@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 import {
   Star,
@@ -18,6 +17,8 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { Institute, InstituteFacility } from '@/types';
+import { instituteLogoUrl, FALLBACK_LOGO_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface CompareTableProps {
   institutes: Institute[];
@@ -32,8 +33,6 @@ interface ComparisonRow {
 }
 
 export function CompareTable({ institutes, facilities }: CompareTableProps) {
-  const logoImage = '/assests/sample_image_for_anything.png';
-
   const renderCheck = (value: boolean) => (
     <div className={`flex justify-center ${value ? 'text-green-500' : 'text-[var(--gray-300)]'}`}>
       {value ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
@@ -189,8 +188,9 @@ export function CompareTable({ institutes, facilities }: CompareTableProps) {
                     className="block group"
                   >
                     <div className="w-16 h-16 mx-auto mb-3 rounded-xl bg-[var(--gray-100)] flex items-center justify-center overflow-hidden group-hover:ring-2 group-hover:ring-[var(--primary)] transition-all">
-                      <Image
-                        src={logoImage}
+                      <SafeImage
+                        src={instituteLogoUrl(institute.logoUrl) || FALLBACK_LOGO_URL}
+                        fallbackSrc={FALLBACK_LOGO_URL}
                         alt={institute.name}
                         width={56}
                         height={56}

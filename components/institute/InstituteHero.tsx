@@ -76,7 +76,6 @@ export function InstituteHero({ institute }: InstituteHeroProps) {
           fill
           className="object-cover"
           priority
-          unoptimized={!!bannerUrl}
         />
 
         {/* Action Buttons */}
@@ -132,7 +131,6 @@ export function InstituteHero({ institute }: InstituteHeroProps) {
                     width={96}
                     height={96}
                     className="object-contain rounded-xl"
-                    unoptimized={!!logoUrl}
                   />
                 </div>
               </motion.div>

@@ -61,15 +61,6 @@ export function InstituteCard({ institute, index = 0 }: InstituteCardProps) {
     }
   };
 
-  // TODO: Replace with actual external URLs once next.config.js is configured
-  // Using local placeholder images for now
-  // const bannerImage = bannerUrl || '/images/institute-banner.jpg';
-  // const logoImage = logoUrl || '/images/institute-logo.png';
-  
-  // Using local assets as placeholders
-  const bannerImage = '/assests/sample_image_for_anything.png';
-  const logoImage = '/assests/sample_image_for_anything.png';
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

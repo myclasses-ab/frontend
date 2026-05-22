@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Clock, X, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import { useInstituteStore } from '@/store/instituteStore';
 import { instituteApi } from '@/api';
 import { Institute } from '@/types';
+import { instituteLogoUrl, FALLBACK_LOGO_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface RecentlyViewedProps {
   maxItems?: number;
@@ -87,8 +88,6 @@ export function RecentlyViewed({ maxItems = 4, className = '' }: RecentlyViewedP
     return null;
   }
 
-  const logoImage = '/assests/sample_image_for_anything.png';
-
   return (
     <div className={`${className}`}>
       <div className="flex items-center justify-between mb-4">
@@ -134,8 +133,9 @@ export function RecentlyViewed({ maxItems = 4, className = '' }: RecentlyViewedP
               className="flex items-center gap-3 p-3 bg-white rounded-xl border border-[var(--gray-200)] hover:border-[var(--primary)] hover:shadow-md transition-all group"
             >
               <div className="w-14 h-14 rounded-lg bg-[var(--gray-100)] flex items-center justify-center overflow-hidden flex-shrink-0">
-                <Image
-                  src={logoImage}
+                <SafeImage
+                  src={instituteLogoUrl(institute.logoUrl) || FALLBACK_LOGO_URL}
+                  fallbackSrc={FALLBACK_LOGO_URL}
                   alt={institute.name}
                   width={48}
                   height={48}

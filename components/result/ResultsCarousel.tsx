@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import {
   ChevronLeft,
   ChevronRight,
@@ -12,6 +11,8 @@ import {
   Star,
 } from 'lucide-react';
 import { Result, RankOrScoreType } from '@/types';
+import { FALLBACK_PERSON_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface ResultsCarouselProps {
   results: Result[];
@@ -139,8 +140,9 @@ export function ResultsCarousel({ results, examTypeNames = {} }: ResultsCarousel
               {/* Student Photo */}
               <div className="relative flex-shrink-0">
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-amber-200 overflow-hidden bg-white shadow-lg">
-                  <Image
-                    src={currentResult.studentPhotoUrl || '/assests/sample_image_for_anything.png'}
+                  <SafeImage
+                    src={currentResult.studentPhotoUrl || FALLBACK_PERSON_URL}
+                    fallbackSrc={FALLBACK_PERSON_URL}
                     alt={currentResult.studentName}
                     fill
                     className="object-cover"

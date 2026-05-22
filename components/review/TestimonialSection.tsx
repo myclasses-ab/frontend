@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { Quote, Star, Play } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
 import { Result } from '@/types';
+import { FALLBACK_PERSON_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface TestimonialSectionProps {
   results: Result[];
@@ -51,8 +52,9 @@ export function TestimonialSection({ results, examTypeNames = {} }: TestimonialS
             {/* Student Info */}
             <div className="flex items-center gap-3 pt-4 border-t border-[var(--gray-100)]">
               <div className="relative w-10 h-10 rounded-full overflow-hidden bg-[var(--gray-100)]">
-                <Image
-                  src={testimonial.studentPhotoUrl || '/assests/sample_image_for_anything.png'}
+                <SafeImage
+                  src={testimonial.studentPhotoUrl || FALLBACK_PERSON_URL}
+                  fallbackSrc={FALLBACK_PERSON_URL}
                   alt={testimonial.studentName}
                   fill
                   className="object-cover"

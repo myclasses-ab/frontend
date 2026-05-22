@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 import {
   Star,
@@ -13,6 +12,8 @@ import {
   Check,
 } from 'lucide-react';
 import { Institute } from '@/types';
+import { instituteLogoUrl, FALLBACK_LOGO_URL } from '../helper/imageHelper';
+import { SafeImage } from '../helper/SafeImage';
 
 interface CompareCardProps {
   institute: Institute;
@@ -31,8 +32,6 @@ export function CompareCard({
   showCheckbox = false,
   compact = false,
 }: CompareCardProps) {
-  const logoImage = '/assests/sample_image_for_anything.png';
-
   if (compact) {
     return (
       <motion.div
@@ -57,8 +56,9 @@ export function CompareCard({
         <div className="p-3">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg bg-[var(--gray-100)] flex items-center justify-center overflow-hidden flex-shrink-0">
-              <Image
-                src={logoImage}
+              <SafeImage
+                src={instituteLogoUrl(institute.logoUrl) || FALLBACK_LOGO_URL}
+                fallbackSrc={FALLBACK_LOGO_URL}
                 alt={institute.name}
                 width={40}
                 height={40}
@@ -116,8 +116,9 @@ export function CompareCard({
       <div className="p-4 border-b border-[var(--gray-100)]">
         <div className="flex items-start gap-3">
           <div className="w-16 h-16 rounded-xl bg-[var(--gray-100)] flex items-center justify-center overflow-hidden flex-shrink-0">
-            <Image
-              src={logoImage}
+            <SafeImage
+              src={instituteLogoUrl(institute.logoUrl) || FALLBACK_LOGO_URL}
+              fallbackSrc={FALLBACK_LOGO_URL}
               alt={institute.name}
               width={56}
               height={56}
