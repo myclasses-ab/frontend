@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://orca-app-s8tpj.ondigitalocean.app';
 
 const axiosInstance = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -58,7 +58,7 @@ axiosInstance.interceptors.response.use(
           break;
         case 500:
           // Server error
-          console.error('Server error');
+          console.error('Server error:', error.response.data);
           break;
         default:
           console.error('API error:', error.response.data);
