@@ -1,0 +1,1835 @@
+/**
+ * Comprehensive Exam Information Data
+ * Contains detailed information about all competitive exams
+ */
+
+// Types
+export interface ExamSubject {
+  name: string;
+  topics: string[];
+  weightage?: string;
+  iconName?: string;
+}
+
+export interface ImportantDate {
+  event: string;
+  date: string;
+  description?: string;
+  isImportant?: boolean;
+}
+
+export interface ExamPattern {
+  subject: string;
+  questions: number;
+  marks: number;
+  duration: string;
+  negativeMarking?: string;
+}
+
+export interface EligibilityCriteria {
+  education: string;
+  ageLimit?: string;
+  attempts?: string;
+  nationality?: string;
+  other?: string[];
+}
+
+export interface PreparationTip {
+  title: string;
+  description: string;
+  iconName: string;
+}
+
+export interface Topper {
+  rank: number;
+  name: string;
+  percentile?: string;
+  state?: string;
+  year: number;
+}
+
+export interface ExamInfo {
+  id: string;
+  slug: string;
+  name: string;
+  fullName: string;
+  shortName: string;
+  description: string;
+  metaDescription: string;
+  metaKeywords: string[];
+  category: "engineering" | "medical" | "state" | "scholarship" | "olympiad";
+  difficulty: "high" | "very-high" | "extreme";
+  popularity: number; // 1-10
+  conductingBody: string;
+  logo?: string;
+  color: string;
+  gradient: string;
+  heroImage?: string;
+
+  // Overview
+  overview: {
+    about: string;
+    purpose: string;
+    scope: string;
+    recognition: string;
+  };
+
+  // Eligibility
+  eligibility: EligibilityCriteria;
+
+  // Exam Pattern
+  examPattern: {
+    mode: string;
+    duration: string;
+    totalMarks: number;
+    totalQuestions?: number;
+    sections: ExamPattern[];
+    markingScheme: {
+      correct: string;
+      incorrect: string;
+      unattempted: string;
+    };
+    languages: string[];
+  };
+
+  // Syllabus
+  syllabus: {
+    subjects: ExamSubject[];
+    pdfLink?: string;
+  };
+
+  // Important Dates
+  importantDates: {
+    notification: string;
+    applicationStart: string;
+    applicationEnd: string;
+    admitCard: string;
+    examDate: string;
+    result: string;
+    counselling?: string;
+    dates: ImportantDate[];
+  };
+
+  // Preparation Tips
+  preparationTips: PreparationTip[];
+
+  // Top Colleges
+  topColleges?: {
+    name: string;
+    ranking: number;
+    location: string;
+    seats?: number;
+    cutoff?: string;
+  }[];
+
+  // Statistics
+  statistics: {
+    totalApplicants: string;
+    totalSeats?: string;
+    qualificationRate: string;
+    successRate: string;
+    year: number;
+  };
+
+  // Resources
+  resources: {
+    officialWebsite: string;
+    notificationPdf?: string;
+    previousPapers?: string[];
+    mockTests?: string[];
+  };
+
+  // Related Exams
+  relatedExams: string[];
+
+  // FAQs
+  faqs: {
+    question: string;
+    answer: string;
+  }[];
+}
+
+// =============================================================================
+// JEE EXAM DATA
+// =============================================================================
+
+export const jeeExam: ExamInfo = {
+  id: "jee",
+  slug: "jee",
+  name: "JEE",
+  fullName: "Joint Entrance Examination",
+  shortName: "JEE",
+  description:
+    "India's most prestigious engineering entrance exam for admission to IITs, NITs, IIITs, and other top engineering institutions.",
+  metaDescription:
+    "Complete guide to JEE Main and JEE Advanced 2026-27. Get exam dates, syllabus, eligibility, pattern, preparation tips, and best coaching institutes for JEE.",
+  metaKeywords: [
+    "JEE Main",
+    "JEE Advanced",
+    "IIT JEE",
+    "Engineering Entrance Exam",
+    "JEE 2026",
+    "JEE syllabus",
+    "JEE preparation",
+    "IIT coaching",
+    "JEE eligibility",
+    "JEE pattern",
+  ],
+  category: "engineering",
+  difficulty: "extreme",
+  popularity: 10,
+  conductingBody: "National Testing Agency (NTA) - JEE Main | IITs - JEE Advanced",
+  color: "#4f46e5",
+  gradient: "from-indigo-500 to-purple-600",
+
+  overview: {
+    about:
+      "Joint Entrance Examination (JEE) is a national-level engineering entrance examination conducted for admission to various engineering colleges in India. It is conducted in two phases: JEE Main and JEE Advanced. JEE Main serves as a qualifying exam for JEE Advanced and is also used for admission to NITs, IIITs, and CFTIs.",
+    purpose:
+      "To select the most deserving candidates for undergraduate engineering programs at premier institutions including IITs, NITs, IIITs, and other centrally funded technical institutions.",
+    scope:
+      "National level examination recognized by all engineering colleges across India. JEE Advanced qualified students can get admission into 23 IITs.",
+    recognition:
+      "Recognized as one of the toughest undergraduate entrance exams globally, with acceptance rates below 1% for IITs.",
+  },
+
+  eligibility: {
+    education:
+      "Candidates must have passed 10+2 or equivalent examination with Physics, Chemistry, and Mathematics as compulsory subjects.",
+    ageLimit:
+      "No age limit for JEE Main. For JEE Advanced, candidates should have been born on or after October 1, 2001 (5-year relaxation for SC/ST/PwD).",
+    attempts:
+      "JEE Main: 3 consecutive years. JEE Advanced: Maximum 2 attempts in consecutive years.",
+    nationality:
+      "Indian nationals, NRIs, PIOs, OCIs, and foreign nationals are eligible.",
+    other: [
+      "Minimum 75% aggregate marks in Class 12 (65% for SC/ST) OR be in top 20 percentile of respective board. Note: This criteria has been relaxed for 2026.",
+      "Candidates appearing for Class 12 exam in 2026 are also eligible.",
+      "For IITs, candidates must qualify JEE Advanced and meet the category-wise rank cutoffs.",
+    ],
+  },
+
+  examPattern: {
+    mode: "Computer-Based Test (CBT) - Online Mode",
+    duration: "3 hours (4 hours for PwD candidates)",
+    totalMarks: 300,
+    totalQuestions: 90,
+    sections: [
+      {
+        subject: "Physics",
+        questions: 30,
+        marks: 100,
+        duration: "Part of 3 hours",
+        negativeMarking: "-1 for incorrect MCQ answers",
+      },
+      {
+        subject: "Chemistry",
+        questions: 30,
+        marks: 100,
+        duration: "Part of 3 hours",
+        negativeMarking: "-1 for incorrect MCQ answers",
+      },
+      {
+        subject: "Mathematics",
+        questions: 30,
+        marks: 100,
+        duration: "Part of 3 hours",
+        negativeMarking: "-1 for incorrect MCQ answers",
+      },
+    ],
+    markingScheme: {
+      correct: "+4 marks for each correct answer",
+      incorrect: "-1 mark for each wrong MCQ answer; 0 for numerical value questions",
+      unattempted: "0 marks",
+    },
+    languages: [
+      "English",
+      "Hindi",
+      "Assamese",
+      "Bengali",
+      "Gujarati",
+      "Kannada",
+      "Malayalam",
+      "Marathi",
+      "Odia",
+      "Punjabi",
+      "Tamil",
+      "Telugu",
+      "Urdu",
+    ],
+  },
+
+  syllabus: {
+    subjects: [
+      {
+        name: "Physics",
+        iconName: "Atom",
+        topics: [
+          "Physics and Measurement",
+          "Kinematics",
+          "Laws of Motion",
+          "Work, Energy and Power",
+          "Rotational Motion",
+          "Gravitation",
+          "Properties of Solids and Liquids",
+          "Thermodynamics",
+          "Kinetic Theory of Gases",
+          "Oscillations and Waves",
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects of Current",
+          "Electromagnetic Induction",
+          "Optics",
+          "Modern Physics",
+        ],
+        weightage: "33%",
+      },
+      {
+        name: "Chemistry",
+        iconName: "FlaskConical",
+        topics: [
+          "Some Basic Concepts in Chemistry",
+          "States of Matter",
+          "Atomic Structure",
+          "Chemical Bonding",
+          "Chemical Thermodynamics",
+          "Solutions",
+          "Equilibrium",
+          "Redox Reactions",
+          "Electrochemistry",
+          "Chemical Kinetics",
+          "Surface Chemistry",
+          "Classification of Elements",
+          "Hydrogen",
+          "s-Block Elements",
+          "p-Block Elements",
+          "d-Block Elements",
+          "Coordination Compounds",
+          "Environmental Chemistry",
+          "Organic Chemistry Basics",
+          "Hydrocarbons",
+          "Organic Compounds",
+          "Biomolecules",
+          "Polymers",
+        ],
+        weightage: "33%",
+      },
+      {
+        name: "Mathematics",
+        iconName: "Calculator",
+        topics: [
+          "Sets, Relations and Functions",
+          "Complex Numbers",
+          "Quadratic Equations",
+          "Matrices and Determinants",
+          "Permutations and Combinations",
+          "Mathematical Induction",
+          "Binomial Theorem",
+          "Sequences and Series",
+          "Limit, Continuity and Differentiability",
+          "Integral Calculus",
+          "Differential Equations",
+          "Coordinate Geometry",
+          "3D Geometry",
+          "Vector Algebra",
+          "Statistics and Probability",
+          "Trigonometry",
+          "Mathematical Reasoning",
+        ],
+        weightage: "34%",
+      },
+    ],
+    pdfLink: "https://jeemain.nta.nic.in/webinfo2026/",
+  },
+
+  importantDates: {
+    notification: "November 2025",
+    applicationStart: "November 2025",
+    applicationEnd: "December 2025",
+    admitCard: "January 2026",
+    examDate: "January 2026 (Session 1) | April 2, 4, 5, 6, 7, 8, 2026 (Session 2)",
+    result: "February 2026 (Session 1) | April 2026 (Session 2)",
+    counselling: "June - July 2026 (JoSAA)",
+    dates: [
+      {
+        event: "JEE Main 2026 Session 1 Notification",
+        date: "November 2025",
+        isImportant: true,
+      },
+      {
+        event: "JEE Main 2026 Session 1 Application",
+        date: "November - December 2025",
+        isImportant: true,
+      },
+      {
+        event: "JEE Main 2026 Session 1 Exam",
+        date: "January 2026",
+        isImportant: true,
+      },
+      {
+        event: "JEE Main 2026 Session 1 Result",
+        date: "February 2026",
+        isImportant: true,
+      },
+      {
+        event: "JEE Main 2026 Session 2 Application",
+        date: "February - March 2026",
+      },
+      {
+        event: "JEE Main 2026 Session 2 Exam",
+        date: "April 2, 4, 5, 6, 7, 8, 2026",
+      },
+      {
+        event: "JEE Advanced 2026 Registration Opens",
+        date: "April 23, 2026",
+        isImportant: true,
+      },
+      {
+        event: "JEE Advanced 2026 Registration Closes",
+        date: "May 2, 2026",
+        isImportant: true,
+      },
+      {
+        event: "JEE Advanced 2026 Exam",
+        date: "May 17, 2026 (Sunday)",
+        isImportant: true,
+      },
+      {
+        event: "JoSAA Counselling",
+        date: "June - July 2026",
+        isImportant: true,
+      },
+    ],
+  },
+
+  preparationTips: [
+    {
+      title: "Master NCERT First",
+      description:
+        "Start with NCERT textbooks for all three subjects. JEE questions are often based on NCERT concepts with increased difficulty.",
+      iconName: "BookOpen",
+    },
+    {
+      title: "Create a Study Schedule",
+      description:
+        "Dedicate equal time to Physics, Chemistry, and Mathematics. Follow a disciplined routine with 6-8 hours of daily study.",
+      iconName: "Clock",
+    },
+    {
+      title: "Practice Previous Year Papers",
+      description:
+        "Solve at least 15-20 years of JEE papers to understand the pattern and frequently asked topics.",
+      iconName: "FileText",
+    },
+    {
+      title: "Take Regular Mock Tests",
+      description:
+        "Attempt full-length mock tests weekly. Analyze your performance and work on weak areas.",
+      iconName: "Target",
+    },
+    {
+      title: "Focus on Conceptual Clarity",
+      description:
+        "Don't just memorize formulas. Understand the derivations and applications of each concept.",
+      iconName: "Lightbulb",
+    },
+    {
+      title: "Time Management",
+      description:
+        "Practice solving questions within time limits. JEE is as much about speed as it is about accuracy.",
+      iconName: "Clock",
+    },
+  ],
+
+  topColleges: [
+    { name: "IIT Bombay", ranking: 1, location: "Mumbai, Maharashtra", seats: 1360 },
+    { name: "IIT Delhi", ranking: 2, location: "New Delhi", seats: 1200 },
+    { name: "IIT Madras", ranking: 3, location: "Chennai, Tamil Nadu", seats: 1100 },
+    { name: "IIT Kanpur", ranking: 4, location: "Kanpur, Uttar Pradesh", seats: 1050 },
+    { name: "IIT Roorkee", ranking: 5, location: "Roorkee, Uttarakhand", seats: 1350 },
+    { name: "IIT Kharagpur", ranking: 6, location: "Kharagpur, West Bengal", seats: 1800 },
+    { name: "IIT Guwahati", ranking: 7, location: "Guwahati, Assam", seats: 900 },
+    { name: "IIT Hyderabad", ranking: 8, location: "Hyderabad, Telangana", seats: 400 },
+  ],
+
+  statistics: {
+    totalApplicants: "12+ Lakhs",
+    totalSeats: "55,000+",
+    qualificationRate: "2.5%",
+    successRate: "Less than 1% for IITs",
+    year: 2025,
+  },
+
+  resources: {
+    officialWebsite: "https://jeemain.nta.nic.in/",
+    notificationPdf: "https://jeemain.nta.nic.in/",
+    previousPapers: [
+      "https://jeemain.nta.nic.in/",
+      "https://jeeadv.ac.in/",
+    ],
+    mockTests: [
+      "https://jeemain.nta.nic.in/",
+      "https://nta.ac.in/",
+    ],
+  },
+
+  relatedExams: ["BITSAT", "VITEEE", "WBJEE", "MHT-CET", "COMEDK"],
+
+  faqs: [
+    {
+      question: "What is the difference between JEE Main and JEE Advanced?",
+      answer:
+        "JEE Main is the first stage and is conducted by NTA. It qualifies you for JEE Advanced and is used for admission to NITs, IIITs, and CFTIs. JEE Advanced is the second stage conducted by IITs and is required for admission to IITs.",
+    },
+    {
+      question: "How many times can I attempt JEE?",
+      answer:
+        "For JEE Main, you can attempt 3 consecutive years (6 attempts total - 2 per year). For JEE Advanced, you get maximum 2 attempts in consecutive years.",
+    },
+    {
+      question: "Is 75% criteria removed for JEE 2026?",
+      answer:
+        "For JEE 2026, the 75% criteria in Class 12 (or top 20 percentile) has been relaxed for IITs, NITs, IIITs, and CFTIs. Candidates only need to pass Class 12 to be eligible. Please check official notifications for any further updates.",
+    },
+    {
+      question: "Can I get into IIT without coaching?",
+      answer:
+        "Yes, many students crack JEE without formal coaching through self-study. However, proper guidance, study material, and disciplined preparation are essential.",
+    },
+    {
+      question: "What is the best time to start JEE preparation?",
+      answer:
+        "Ideally, start from Class 11. However, many students begin serious preparation in Class 12 or take a drop year after Class 12.",
+    },
+  ],
+};
+
+// =============================================================================
+// NEET EXAM DATA
+// =============================================================================
+
+export const neetExam: ExamInfo = {
+  id: "neet",
+  slug: "neet",
+  name: "NEET",
+  fullName: "National Eligibility cum Entrance Test",
+  shortName: "NEET",
+  description:
+    "India's single largest medical entrance exam for admission to MBBS, BDS, BAMS, BHMS, and other undergraduate medical courses.",
+  metaDescription:
+    "Complete NEET UG 2026 guide - Exam dates, syllabus, eligibility, pattern, preparation strategy, and top medical colleges in India.",
+  metaKeywords: [
+    "NEET",
+    "NEET UG",
+    "Medical Entrance Exam",
+    "MBBS Entrance",
+    "NEET 2026",
+    "NEET syllabus",
+    "NEET preparation",
+    "Medical coaching",
+    "NEET eligibility",
+    "NEET pattern",
+  ],
+  category: "medical",
+  difficulty: "very-high",
+  popularity: 10,
+  conductingBody: "National Testing Agency (NTA)",
+  color: "#10b981",
+  gradient: "from-emerald-500 to-teal-600",
+
+  overview: {
+    about:
+      "National Eligibility cum Entrance Test (NEET) is the sole entrance examination for admission to undergraduate medical (MBBS), dental (BDS), AYUSH (BAMS, BHMS, BUMS), and veterinary courses in government and private colleges across India. It is also the qualifying exam for those aspiring to pursue medical education abroad.",
+    purpose:
+      "To create a single-window entrance examination for all medical UG admissions, ensuring fair and transparent selection of candidates based on merit.",
+    scope:
+      "All India level examination accepted by all medical colleges including AIIMS, JIPMER, and all state government/private medical colleges.",
+    recognition:
+      "Largest undergraduate medical entrance exam in the world with over 20 lakh candidates appearing annually.",
+  },
+
+  eligibility: {
+    education:
+      "Candidates must have passed/appearing in 10+2 with Physics, Chemistry, Biology/Biotechnology, and English as core subjects.",
+    ageLimit:
+      "Minimum 17 years as of December 31 of admission year. No upper age limit (as per current rules).",
+    attempts: "No limit on number of attempts.",
+    nationality:
+      "Indian Nationals, NRIs, OCIs, PIOs, and Foreign Nationals are eligible.",
+    other: [
+      "General category: Minimum 50% aggregate in PCB (Physics, Chemistry, Biology).",
+      "SC/ST/OBC: Minimum 40% aggregate in PCB.",
+      "General-PwD: Minimum 45% aggregate in PCB.",
+      "Qualifying marks are required in each subject individually.",
+      "There is no upper age limit for NEET 2026.",
+    ],
+  },
+
+  examPattern: {
+    mode: "Pen and Paper Based Test (Offline)",
+    duration: "3 hours 20 minutes (200 minutes)",
+    totalMarks: 720,
+    totalQuestions: 200,
+    sections: [
+      {
+        subject: "Physics",
+        questions: 50,
+        marks: 180,
+        duration: "Part of 3h 20m",
+        negativeMarking: "-1 for incorrect answers",
+      },
+      {
+        subject: "Chemistry",
+        questions: 50,
+        marks: 180,
+        duration: "Part of 3h 20m",
+        negativeMarking: "-1 for incorrect answers",
+      },
+      {
+        subject: "Botany",
+        questions: 50,
+        marks: 180,
+        duration: "Part of 3h 20m",
+        negativeMarking: "-1 for incorrect answers",
+      },
+      {
+        subject: "Zoology",
+        questions: 50,
+        marks: 180,
+        duration: "Part of 3h 20m",
+        negativeMarking: "-1 for incorrect answers",
+      },
+    ],
+    markingScheme: {
+      correct: "+4 marks for each correct answer",
+      incorrect: "-1 mark for each wrong answer",
+      unattempted: "0 marks",
+    },
+    languages: [
+      "English",
+      "Hindi",
+      "Assamese",
+      "Bengali",
+      "Gujarati",
+      "Kannada",
+      "Malayalam",
+      "Marathi",
+      "Odia",
+      "Punjabi",
+      "Tamil",
+      "Telugu",
+      "Urdu",
+    ],
+  },
+
+  syllabus: {
+    subjects: [
+      {
+        name: "Physics",
+        iconName: "Atom",
+        topics: [
+          "Physical World and Measurement",
+          "Kinematics",
+          "Laws of Motion",
+          "Work, Energy and Power",
+          "Motion of System of Particles",
+          "Gravitation",
+          "Properties of Bulk Matter",
+          "Thermodynamics",
+          "Kinetic Theory",
+          "Oscillations and Waves",
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effects of Current",
+          "Electromagnetic Induction",
+          "Electromagnetic Waves",
+          "Optics",
+          "Dual Nature of Matter",
+          "Atoms and Nuclei",
+          "Electronic Devices",
+        ],
+        weightage: "25%",
+      },
+      {
+        name: "Chemistry",
+        iconName: "FlaskConical",
+        topics: [
+          "Some Basic Concepts",
+          "Structure of Atom",
+          "Classification of Elements",
+          "Chemical Bonding",
+          "States of Matter",
+          "Thermodynamics",
+          "Equilibrium",
+          "Redox Reactions",
+          "Hydrogen",
+          "s-Block Elements",
+          "p-Block Elements",
+          "Organic Chemistry",
+          "Hydrocarbons",
+          "Environmental Chemistry",
+          "Solid State",
+          "Solutions",
+          "Electrochemistry",
+          "Chemical Kinetics",
+          "Surface Chemistry",
+          "Coordination Compounds",
+          "Biomolecules",
+          "Polymers",
+        ],
+        weightage: "25%",
+      },
+      {
+        name: "Biology",
+        iconName: "Microscope",
+        topics: [
+          "Diversity in Living World",
+          "Structural Organization in Animals and Plants",
+          "Cell Structure and Function",
+          "Plant Physiology",
+          "Human Physiology",
+          "Reproduction",
+          "Genetics and Evolution",
+          "Biology and Human Welfare",
+          "Biotechnology and Its Applications",
+          "Ecology and Environment",
+        ],
+        weightage: "50%",
+      },
+    ],
+    pdfLink: "https://neet.nta.nic.in/",
+  },
+
+  importantDates: {
+    notification: "December 2025",
+    applicationStart: "January 2026",
+    applicationEnd: "February 2026",
+    admitCard: "April 26, 2026",
+    examDate: "May 2026 (First Sunday)",
+    result: "June 2026",
+    counselling: "July - September 2026",
+    dates: [
+      {
+        event: "NEET 2026 Official Notification",
+        date: "December 2025",
+        isImportant: true,
+      },
+      {
+        event: "Online Application Start",
+        date: "January 2026",
+        isImportant: true,
+      },
+      {
+        event: "Application Last Date",
+        date: "February 2026",
+        isImportant: true,
+      },
+      {
+        event: "Correction Window",
+        date: "March 2026",
+      },
+      {
+        event: "Admit Card Release",
+        date: "April 26, 2026",
+        isImportant: true,
+      },
+      {
+        event: "NEET 2026 Exam Date",
+        date: "May 2026 (First Sunday)",
+        isImportant: true,
+      },
+      {
+        event: "Answer Key Release",
+        date: "May 2026",
+      },
+      {
+        event: "Result Declaration",
+        date: "June 2026",
+        isImportant: true,
+      },
+      {
+        event: "Counselling Begins",
+        date: "July 2026",
+        isImportant: true,
+      },
+    ],
+  },
+
+  preparationTips: [
+    {
+      title: "Master NCERT Biology",
+      description:
+        "NCERT Biology is the Bible for NEET. Read every line thoroughly, including diagrams and tables. 80-90% questions come directly from NCERT.",
+      iconName: "BookOpen",
+    },
+    {
+      title: "Equal Focus on Physics & Chemistry",
+      description:
+        "Don't neglect Physics and Chemistry. These subjects can make or break your rank. Practice numericals daily.",
+      iconName: "Calculator",
+    },
+    {
+      title: "Diagram-Based Learning",
+      description:
+        "Practice drawing and labeling diagrams. Many questions in NEET are diagram-based, especially in Zoology and Botany.",
+      iconName: "Microscope",
+    },
+    {
+      title: "Previous Year Questions",
+      description:
+        "Solve last 15 years of NEET/AIPMT papers. You'll notice many questions are repeated with slight modifications.",
+      iconName: "FileText",
+    },
+    {
+      title: "Regular Revision",
+      description:
+        "Biology requires frequent revision. Make short notes and revise them regularly to retain vast information.",
+      iconName: "Clock",
+    },
+    {
+      title: "Mock Tests & Analysis",
+      description:
+        "Take weekly mock tests. Analyze your mistakes and work on weak topics. Time management is crucial in NEET.",
+      iconName: "Target",
+    },
+  ],
+
+  topColleges: [
+    { name: "AIIMS Delhi", ranking: 1, location: "New Delhi", seats: 125 },
+    { name: "CMC Vellore", ranking: 2, location: "Vellore, Tamil Nadu", seats: 100 },
+    { name: "AFMC Pune", ranking: 3, location: "Pune, Maharashtra", seats: 150 },
+    { name: "MAMC Delhi", ranking: 4, location: "New Delhi", seats: 250 },
+    { name: "KGMU Lucknow", ranking: 5, location: "Lucknow, Uttar Pradesh", seats: 250 },
+    { name: "JIPMER Puducherry", ranking: 6, location: "Puducherry", seats: 200 },
+    { name: "BHU Varanasi", ranking: 7, location: "Varanasi, Uttar Pradesh", seats: 100 },
+    { name: "Seth GS Mumbai", ranking: 8, location: "Mumbai, Maharashtra", seats: 200 },
+  ],
+
+  statistics: {
+    totalApplicants: "20+ Lakhs",
+    totalSeats: "1,10,000+ (MBBS)",
+    qualificationRate: "55%",
+    successRate: "5-6% for Government Colleges",
+    year: 2025,
+  },
+
+  resources: {
+    officialWebsite: "https://neet.nta.nic.in/",
+    notificationPdf: "https://neet.nta.nic.in/",
+    previousPapers: [
+      "https://neet.nta.nic.in/",
+      "https://nta.ac.in/",
+    ],
+    mockTests: [
+      "https://neet.nta.nic.in/",
+      "https://nta.ac.in/",
+    ],
+  },
+
+  relatedExams: ["AIIMS", "JIPMER", "INI CET", "FMGE", "NEET PG"],
+
+  faqs: [
+    {
+      question: "Can I appear for NEET if I have a year gap after Class 12?",
+      answer:
+        "Yes, there is no restriction on the number of attempts or year gaps for NEET. You can appear for NEET even after multiple years of completing Class 12.",
+    },
+    {
+      question: "Is NEET required for admission to AIIMS and JIPMER?",
+      answer:
+        "Yes, since 2020, admission to all AIIMS and JIPMER is also through NEET scores only. Separate entrance exams for these institutes have been discontinued.",
+    },
+    {
+      question: "What is the minimum marks required in NEET for government college?",
+      answer:
+        "For government colleges, you typically need 550+ marks out of 720 for the general category. Cutoff varies by state and category.",
+    },
+    {
+      question: "Can I get MBBS admission with 400 marks in NEET?",
+      answer:
+        "With 400 marks, getting government MBBS seat is difficult. You may get private college admission or consider BDS, BAMS, BHMS, or BUMS courses.",
+    },
+    {
+      question: "Is NCERT enough for NEET preparation?",
+      answer:
+        "For Biology, NCERT is sufficient. For Physics and Chemistry, you need additional reference books like HC Verma and OP Tandon along with NCERT.",
+    },
+  ],
+};
+
+// =============================================================================
+// MHT-CET EXAM DATA
+// =============================================================================
+
+export const mhtcetExam: ExamInfo = {
+  id: "mht-cet",
+  slug: "mht-cet",
+  name: "MHT-CET",
+  fullName: "Maharashtra Common Entrance Test",
+  shortName: "MHT-CET",
+  description:
+    "Maharashtra state-level entrance exam for admission to engineering, pharmacy, and agriculture courses in colleges across Maharashtra.",
+  metaDescription:
+    "Complete MHT-CET 2026 guide - Exam dates, Maharashtra CET syllabus, eligibility, pattern, preparation tips, and top colleges in Maharashtra.",
+  metaKeywords: [
+    "MHT-CET",
+    "Maharashtra CET",
+    "MHT CET",
+    "Engineering Entrance Maharashtra",
+    "MHT-CET 2026",
+    "MHT-CET syllabus",
+    "MHT-CET preparation",
+    "Maharashtra colleges",
+    "MHT-CET eligibility",
+    "PCM Maharashtra",
+  ],
+  category: "state",
+  difficulty: "high",
+  popularity: 8,
+  conductingBody: "State Common Entrance Test Cell, Maharashtra",
+  color: "#f97316",
+  gradient: "from-orange-500 to-amber-600",
+
+  overview: {
+    about:
+      "Maharashtra Common Entrance Test (MHT-CET) is a state-level entrance examination conducted for admission to undergraduate engineering, pharmacy, and agriculture courses in various colleges across Maharashtra. It is the gateway to prestigious institutes like COEP, VJTI, and ICT.",
+    purpose:
+      "To facilitate merit-based admission to professional degree courses in engineering, technology, pharmacy, and agriculture in Maharashtra state.",
+    scope:
+      "State-level examination for admission to government, government-aided, and private unaided institutions in Maharashtra.",
+    recognition:
+      "Recognized by all colleges in Maharashtra including top institutes like COEP, VJTI, ICT, and WCE.",
+  },
+
+  eligibility: {
+    education:
+      "Candidates must have passed/appearing in HSC (12th) or equivalent with relevant subjects.",
+    ageLimit: "No age limit for appearing in MHT-CET.",
+    attempts: "No limit on number of attempts.",
+    nationality: "Indian Nationals only.",
+    other: [
+      "For Engineering: Physics and Mathematics as compulsory subjects with Chemistry/Biotechnology/Biology/Technical Vocational subject.",
+      "For Pharmacy: Physics, Chemistry, and Mathematics/Biology as compulsory subjects.",
+      "Minimum 50% aggregate marks for general category (45% for reserved categories).",
+      "Candidates must have passed English subject.",
+      "Domicile of Maharashtra required for reservation benefits.",
+    ],
+  },
+
+  examPattern: {
+    mode: "Computer-Based Test (CBT)",
+    duration: "3 hours (180 minutes)",
+    totalMarks: 200,
+    totalQuestions: 150,
+    sections: [
+      {
+        subject: "Mathematics (PCM Group)",
+        questions: 50,
+        marks: 100,
+        duration: "90 minutes",
+        negativeMarking: "No negative marking",
+      },
+      {
+        subject: "Physics",
+        questions: 50,
+        marks: 50,
+        duration: "90 minutes",
+        negativeMarking: "No negative marking",
+      },
+      {
+        subject: "Chemistry",
+        questions: 50,
+        marks: 50,
+        duration: "90 minutes",
+        negativeMarking: "No negative marking",
+      },
+    ],
+    markingScheme: {
+      correct: "Mathematics: +2, Physics/Chemistry: +1",
+      incorrect: "No negative marking",
+      unattempted: "0 marks",
+    },
+    languages: ["English", "Marathi", "Urdu"],
+  },
+
+  syllabus: {
+    subjects: [
+      {
+        name: "Mathematics",
+        iconName: "Calculator",
+        topics: [
+          "Trigonometric Functions",
+          "Trigonometric Functions of Compound Angles",
+          "Factorization Formulae",
+          "Straight Line",
+          "Circle and Conics",
+          "Sets, Relations and Functions",
+          "Probability",
+          "Sequences and Series",
+          "Complex Numbers",
+          "Quadratic Equations",
+          "Permutations and Combinations",
+          "Limits",
+          "Continuity",
+          "Differentiation",
+          "Integration",
+          "Differential Equations",
+          "Three Dimensional Geometry",
+          "Linear Programming",
+        ],
+        weightage: "50%",
+      },
+      {
+        name: "Physics",
+        iconName: "Atom",
+        topics: [
+          "Measurements",
+          "Scalars and Vectors",
+          "Projectile Motion",
+          "Force",
+          "Friction in Solids and Liquids",
+          "Sound Waves",
+          "Thermal Properties of Matter",
+          "Refraction of Light",
+          "Ray Optics",
+          "Electrostatics",
+          "Current Electricity",
+          "Magnetic Effect of Electric Current",
+          "Magnetism",
+          "Electromagnetic Waves",
+        ],
+        weightage: "25%",
+      },
+      {
+        name: "Chemistry",
+        iconName: "FlaskConical",
+        topics: [
+          "Some Basic Concepts of Chemistry",
+          "States of Matter: Gases and Liquids",
+          "Structure of Atom",
+          "Periodic Table",
+          "Redox Reactions",
+          "Chemical Equilibrium",
+          "Surface Chemistry",
+          "Nature of Chemical Bond",
+          "Hydrogen",
+          "s-Block Elements",
+          "p-Block Elements",
+          "Basic Principles and Techniques in Organic Chemistry",
+          "Alkanes",
+          "Alkenes",
+          "Alkynes",
+          "Aromatic Compounds",
+        ],
+        weightage: "25%",
+      },
+    ],
+    pdfLink: "https://cetcell.mahacet.org/",
+  },
+
+  importantDates: {
+    notification: "January 2026",
+    applicationStart: "January 2026",
+    applicationEnd: "March 2026",
+    admitCard: "April 2026",
+    examDate: "April - May 2026",
+    result: "June 2026",
+    counselling: "July - August 2026",
+    dates: [
+      {
+        event: "MHT-CET 2026 Notification",
+        date: "January 2026",
+        isImportant: true,
+      },
+      {
+        event: "Online Registration Starts",
+        date: "January 2026",
+        isImportant: true,
+      },
+      {
+        event: "Registration Closes",
+        date: "March 2026",
+        isImportant: true,
+      },
+      {
+        event: "Admit Card Available",
+        date: "April 2026",
+        isImportant: true,
+      },
+      {
+        event: "MHT-CET 2026 Exam",
+        date: "April - May 2026",
+        isImportant: true,
+      },
+      {
+        event: "Answer Key Release",
+        date: "May 2026",
+      },
+      {
+        event: "Result Declaration",
+        date: "June 2026",
+        isImportant: true,
+      },
+      {
+        event: "CAP Rounds Begin",
+        date: "July 2026",
+        isImportant: true,
+      },
+    ],
+  },
+
+  preparationTips: [
+    {
+      title: "Focus on Class 11 & 12 Syllabus",
+      description:
+        "MHT-CET syllabus is based on Maharashtra State Board curriculum. Focus on HSC textbooks thoroughly.",
+      iconName: "BookOpen",
+    },
+    {
+      title: "Practice Without Calculators",
+      description:
+        "Mathematics section requires speed. Practice calculations manually to improve speed and accuracy.",
+      iconName: "Calculator",
+    },
+    {
+      title: "No Negative Marking Advantage",
+      description:
+        "Since there's no negative marking, attempt all questions. Make educated guesses if unsure.",
+      iconName: "Target",
+    },
+    {
+      title: "Solve MHT-CET Previous Papers",
+      description:
+        "Practice with last 10 years of MHT-CET papers. Understand the question pattern and difficulty level.",
+      iconName: "FileText",
+    },
+    {
+      title: "Time Management",
+      description:
+        "180 minutes for 150 questions. Practice solving papers within the time limit. Aim for 1 minute per question.",
+      iconName: "Clock",
+    },
+    {
+      title: "Join Maharashtra-Specific Test Series",
+      description:
+        "Join coaching institutes or online test series that specialize in MHT-CET pattern.",
+      iconName: "School",
+    },
+  ],
+
+  topColleges: [
+    { name: "COEP Technological University", ranking: 1, location: "Pune", cutoff: "99+ percentile" },
+    { name: "VJTI Mumbai", ranking: 2, location: "Mumbai", cutoff: "99+ percentile" },
+    { name: "ICT Mumbai", ranking: 3, location: "Mumbai", cutoff: "98+ percentile" },
+    { name: "WCE Sangli", ranking: 4, location: "Sangli", cutoff: "97+ percentile" },
+    { name: "PICT Pune", ranking: 5, location: "Pune", cutoff: "96+ percentile" },
+    { name: "VIT Pune", ranking: 6, location: "Pune", cutoff: "95+ percentile" },
+    { name: "SPCE Mumbai", ranking: 7, location: "Mumbai", cutoff: "94+ percentile" },
+    { name: "RCOEM Nagpur", ranking: 8, location: "Nagpur", cutoff: "93+ percentile" },
+  ],
+
+  statistics: {
+    totalApplicants: "4+ Lakhs",
+    totalSeats: "1,50,000+",
+    qualificationRate: "70%",
+    successRate: "30% for Top Colleges",
+    year: 2025,
+  },
+
+  resources: {
+    officialWebsite: "https://cetcell.mahacet.org/",
+    notificationPdf: "https://cetcell.mahacet.org/",
+    previousPapers: [
+      "https://cetcell.mahacet.org/",
+      "https://mhtcet2026.mahacet.org/",
+    ],
+    mockTests: [
+      "https://cetcell.mahacet.org/",
+    ],
+  },
+
+  relatedExams: ["JEE Main", "MHT-CET Pharmacy", "MHT-CET Agriculture", "PERA"],
+
+  faqs: [
+    {
+      question: "Can students from other states appear for MHT-CET?",
+      answer:
+        "Yes, students from other states can appear for MHT-CET. However, they are eligible only for the All India quota seats (15%) in government colleges and management quota seats in private colleges.",
+    },
+    {
+      question: "Is JEE Main score accepted for Maharashtra engineering colleges?",
+      answer:
+        "Yes, JEE Main scores are also accepted for admission to engineering colleges in Maharashtra along with MHT-CET scores.",
+    },
+    {
+      question: "What is a good score in MHT-CET?",
+      answer:
+        "For top colleges like COEP and VJTI, you need 99+ percentile. For good government colleges, 95+ percentile is recommended.",
+    },
+    {
+      question: "Is MHT-CET easier than JEE Main?",
+      answer:
+        "Generally, MHT-CET is considered easier than JEE Main as the syllabus is limited to Maharashtra State Board and there's no negative marking.",
+    },
+    {
+      question: "Can I get admission to COEP through MHT-CET?",
+      answer:
+        "Yes, COEP (College of Engineering Pune) admissions are done through MHT-CET counseling (CAP rounds). You need a very high rank (99.5+ percentile) for COEP.",
+    },
+  ],
+};
+
+// =============================================================================
+// KVPY EXAM DATA
+// =============================================================================
+
+export const kvpyExam: ExamInfo = {
+  id: "kvpy",
+  slug: "kvpy",
+  name: "KVPY",
+  fullName: "Kishore Vaigyanik Protsahan Yojana",
+  shortName: "KVPY",
+  description:
+    "IMPORTANT: KVPY fellowship has been discontinued by the government since 2022. The page is retained for reference. Students are advised to explore alternative fellowship programs like PMRF, INSPIRE, and other research scholarships.",
+  metaDescription:
+    "Complete KVPY guide - Fellowship program details, exam pattern, eligibility, syllabus, selection process, and benefits for science students.",
+  metaKeywords: [
+    "KVPY",
+    "Kishore Vaigyanik Protsahan Yojana",
+    "Science Fellowship",
+    "Research Career",
+    "KVPY exam",
+    "KVPY preparation",
+    "IISc Bangalore",
+    "Science Scholarship",
+    "Basic Science",
+    "Research Fellowship",
+  ],
+  category: "scholarship",
+  difficulty: "very-high",
+  popularity: 7,
+  conductingBody: "Indian Institute of Science (IISc), Bangalore",
+  color: "#8b5cf6",
+  gradient: "from-violet-500 to-purple-600",
+
+  overview: {
+    about:
+      "IMPORTANT UPDATE: The Kishore Vaigyanik Protsahan Yojana (KVPY) fellowship program has been officially discontinued by the Department of Science and Technology (DST) since 2022. No new KVPY exams are being conducted. Students interested in research careers should explore alternative programs such as INSPIRE Scholarship, PM Research Fellowship (PMRF), NTSE, and other science scholarships offered by IISc, IISERs, and other institutions.",
+    purpose:
+      "To identify students with talent and aptitude for research; help them realize their academic potential; encourage them to take up research careers in Science.",
+    scope:
+      "National level fellowship for students pursuing undergraduate courses in Basic Sciences (B.Sc./B.S./B.Stat./B.Math./Int. M.Sc./M.S.) in India.",
+    recognition:
+      "One of the most prestigious science fellowships in India, providing access to top research institutes and summer programs.",
+  },
+
+  eligibility: {
+    education:
+      "Students enrolled in Class 11, 12, or 1st year of undergraduate program in Basic Sciences.",
+    ageLimit: "No specific age limit mentioned.",
+    attempts: "Once per stream (SA, SX, SB).",
+    nationality: "Indian Nationals only.",
+    other: [
+      "SA Stream: Class 11 students with Science subjects (Physics, Chemistry, Biology, Mathematics).",
+      "SX Stream: Class 12 students with Science subjects.",
+      "SB Stream: 1st year B.Sc./B.S./B.Stat./B.Math. students.",
+      "Must have secured minimum 75% (65% for SC/ST/PwD) in aggregate in Maths and Science in Class 10.",
+      "For SX/SB: Must secure 60% (50% for SC/ST/PwD) in Class 12/1st year.",
+    ],
+  },
+
+  examPattern: {
+    mode: "Computer-Based Test (CBT)",
+    duration: "3 hours",
+    totalMarks: 100,
+    totalQuestions: 80,
+    sections: [
+      {
+        subject: "Physics",
+        questions: 20,
+        marks: 25,
+        duration: "Part of 3 hours",
+        negativeMarking: "-0.25 to -0.5 for incorrect",
+      },
+      {
+        subject: "Chemistry",
+        questions: 20,
+        marks: 25,
+        duration: "Part of 3 hours",
+        negativeMarking: "-0.25 to -0.5 for incorrect",
+      },
+      {
+        subject: "Mathematics",
+        questions: 20,
+        marks: 25,
+        duration: "Part of 3 hours",
+        negativeMarking: "-0.25 to -0.5 for incorrect",
+      },
+      {
+        subject: "Biology",
+        questions: 20,
+        marks: 25,
+        duration: "Part of 3 hours",
+        negativeMarking: "-0.25 to -0.5 for incorrect",
+      },
+    ],
+    markingScheme: {
+      correct: "Part I: +1, Part II: +2",
+      incorrect: "Part I: -0.25, Part II: -0.5",
+      unattempted: "0 marks",
+    },
+    languages: ["English", "Hindi"],
+  },
+
+  syllabus: {
+    subjects: [
+      {
+        name: "Physics",
+        iconName: "Atom",
+        topics: [
+          "Mechanics",
+          "Ray Optics",
+          "Electromagnetism",
+          "Thermodynamics",
+          "Waves",
+          "Modern Physics",
+          "Current Electricity",
+          "Electrostatics",
+        ],
+        weightage: "25%",
+      },
+      {
+        name: "Chemistry",
+        iconName: "FlaskConical",
+        topics: [
+          "Atomic Structure",
+          "Chemical Bonding",
+          "States of Matter",
+          "Thermodynamics",
+          "Equilibrium",
+          "Electrochemistry",
+          "Organic Chemistry",
+          "Inorganic Chemistry",
+        ],
+        weightage: "25%",
+      },
+      {
+        name: "Mathematics",
+        iconName: "Calculator",
+        topics: [
+          "Algebra",
+          "Geometry",
+          "Trigonometry",
+          "Calculus",
+          "Coordinate Geometry",
+          "Complex Numbers",
+          "Probability",
+          "Statistics",
+        ],
+        weightage: "25%",
+      },
+      {
+        name: "Biology",
+        iconName: "Microscope",
+        topics: [
+          "Diversity of Living Organisms",
+          "Structural Organization",
+          "Cell Structure and Function",
+          "Plant Physiology",
+          "Human Physiology",
+          "Reproduction",
+          "Genetics",
+          "Evolution",
+          "Ecology",
+        ],
+        weightage: "25%",
+      },
+    ],
+    pdfLink: "https://kvpy.iisc.ac.in/",
+  },
+
+  importantDates: {
+    notification: "DISCONTINUED",
+    applicationStart: "DISCONTINUED",
+    applicationEnd: "DISCONTINUED",
+    admitCard: "DISCONTINUED",
+    examDate: "DISCONTINUED",
+    result: "DISCONTINUED",
+    counselling: "DISCONTINUED",
+    dates: [
+      {
+        event: "KVPY Fellowship Discontinued",
+        date: "2022 onwards",
+        isImportant: true,
+      },
+      {
+        event: "Alternative: INSPIRE Scholarship",
+        date: "Ongoing",
+        isImportant: true,
+      },
+      {
+        event: "Alternative: PM Research Fellowship (PMRF)",
+        date: "Ongoing",
+        isImportant: true,
+      },
+      {
+        event: "Alternative: NTSE",
+        date: "November annually",
+        isImportant: true,
+      },
+      {
+        event: "IISER Aptitude Test (IAT)",
+        date: "June annually",
+        isImportant: true,
+      },
+      {
+        event: "NEST Exam",
+        date: "June annually",
+      },
+      {
+        event: "CMI Entrance Exam",
+        date: "May annually",
+        isImportant: true,
+      },
+      {
+        event: "ISI Admission Test",
+        date: "May annually",
+        isImportant: true,
+      },
+    ],
+  },
+
+  preparationTips: [
+    {
+      title: "Focus on Conceptual Understanding",
+      description:
+        "KVPY tests deep conceptual understanding. Don't just memorize formulas - understand the derivations and applications.",
+      iconName: "Brain",
+    },
+    {
+      title: "Practice Application-Based Questions",
+      description:
+        "KVPY questions are application-based and often trickier than board exams. Practice analytical and reasoning questions.",
+      iconName: "Target",
+    },
+    {
+      title: "Study Beyond NCERT",
+      description:
+        "While NCERT is the base, KVPY requires additional knowledge. Refer to advanced books like Irodov for Physics.",
+      iconName: "BookOpen",
+    },
+    {
+      title: "Solve Previous Year KVPY Papers",
+      description:
+        "Practice at least 10 years of KVPY papers. This will help you understand the unique pattern and difficulty level.",
+      iconName: "FileText",
+    },
+    {
+      title: "Prepare for Interview",
+      description:
+        "The interview carries 25% weightage. Be prepared to explain concepts, your projects, and your interest in research.",
+      iconName: "Users",
+    },
+    {
+      title: "All Four Subjects are Important",
+      description:
+        "Even if you're a PCM student, don't ignore Biology. KVPY requires proficiency in all four subjects.",
+      iconName: "FlaskConical",
+    },
+  ],
+
+  topColleges: [
+    { name: "IISc Bangalore", ranking: 1, location: "Bangalore, Karnataka" },
+    { name: "IISER Pune", ranking: 2, location: "Pune, Maharashtra" },
+    { name: "IISER Kolkata", ranking: 3, location: "Kolkata, West Bengal" },
+    { name: "IISER Mohali", ranking: 4, location: "Mohali, Punjab" },
+    { name: "IISER Bhopal", ranking: 5, location: "Bhopal, Madhya Pradesh" },
+    { name: "IISER Thiruvananthapuram", ranking: 6, location: "Thiruvananthapuram, Kerala" },
+    { name: "IISER Tirupati", ranking: 7, location: "Tirupati, Andhra Pradesh" },
+    { name: "IISER Berhampur", ranking: 8, location: "Berhampur, Odisha" },
+  ],
+
+  statistics: {
+    totalApplicants: "1.5+ Lakhs",
+    totalSeats: "3,000 fellowships",
+    qualificationRate: "2%",
+    successRate: "2%",
+    year: 2022,
+  },
+
+  resources: {
+    officialWebsite: "https://kvpy.iisc.ac.in/",
+    notificationPdf: "https://kvpy.iisc.ac.in/",
+    previousPapers: ["https://kvpy.iisc.ac.in/"],
+    mockTests: ["https://kvpy.iisc.ac.in/"],
+  },
+
+  relatedExams: ["IISER Aptitude Test", "NEST", "JEE Advanced", "NTSE"],
+
+  faqs: [
+    {
+      question: "What are the benefits of KVPY fellowship?",
+      answer:
+        "KVPY fellows receive monthly scholarships (₹5,000 for UG, ₹7,000 for PG) and annual contingency grants (₹20,000/₹28,000). They also get direct admission to IISc and IISERs, summer camps, and access to research facilities.",
+    },
+    {
+      question: "Can KVPY scholars choose any college?",
+      answer:
+        "KVPY scholars have direct admission to IISc and IISERs. For other colleges, they need to follow the respective admission process. However, KVPY scholars get preference in many institutions.",
+    },
+    {
+      question: "Is KVPY tougher than JEE?",
+      answer:
+        "The difficulty level is comparable but different. KVPY focuses more on conceptual understanding and application, while JEE has more numerical problems. KVPY also includes Biology for all streams.",
+    },
+    {
+      question: "Can I appear for KVPY after Class 12?",
+      answer:
+        "Yes, you can appear for the SX stream in Class 12 or SB stream in the 1st year of your B.Sc. program.",
+    },
+    {
+      question: "What is the selection process for KVPY?",
+      answer:
+        "Selection is a two-stage process: 1) Aptitude Test (75% weightage) - objective test in PCMB, 2) Interview (25% weightage) - tests scientific temper and research aptitude.",
+    },
+  ],
+};
+
+// =============================================================================
+// OLYMPIADS EXAM DATA
+// =============================================================================
+
+export const olympiadsExam: ExamInfo = {
+  id: "olympiads",
+  slug: "olympiads",
+  name: "Olympiads",
+  fullName: "Science Olympiads - SOF & HBCSE",
+  shortName: "Olympiads",
+  description:
+    "Prestigious international competitions in Mathematics, Physics, Chemistry, Biology, Astronomy and Informatics for school students.",
+  metaDescription:
+    "Complete guide to Science Olympiads - NSO, IMO, IJSO, RMO, and HBCSE Olympiads. Eligibility, syllabus, selection process, and preparation strategy.",
+  metaKeywords: [
+    "Science Olympiad",
+    "Mathematics Olympiad",
+    "NSO",
+    "IMO",
+    "IJSO",
+    "RMO",
+    "INMO",
+    "Olympiad preparation",
+    "HBCSE",
+    "SOF Olympiad",
+    "International Olympiad",
+  ],
+  category: "olympiad",
+  difficulty: "extreme",
+  popularity: 6,
+  conductingBody: "HBCSE (TIFR) for National | SOF for School Level",
+  color: "#eab308",
+  gradient: "from-yellow-500 to-amber-600",
+
+  overview: {
+    about:
+      "Science Olympiads are prestigious international competitions that identify and nurture talented students in various scientific disciplines. In India, these include Mathematics (RMO/INMO/IMO), Physics (INPhO/IPhO), Chemistry (INChO/IChO), Biology (INBO/IBO), Astronomy (INO/IOAA), and Informatics (ZIO/IOI). These olympiads represent the pinnacle of academic excellence for school students.",
+    purpose:
+      "To stimulate interest in science and mathematics, discover talented students, and prepare them to represent India at International Olympiads.",
+    scope:
+      "International level competitions held annually in different countries. Winners get recognition and opportunities for higher studies at top universities.",
+    recognition:
+      "International Olympiad medalists are recognized globally and often get direct admission to top universities like MIT, Stanford, and IITs.",
+  },
+
+  eligibility: {
+    education:
+      "Students from Class 1 to 12 depending on the specific Olympiad.",
+    ageLimit:
+      "Varies by Olympiad. Generally, students should not have completed Class 12 before the Olympiad year.",
+    attempts: "No limit on attempts at school level. National level has age restrictions.",
+    nationality: "Indian Nationals for Indian Olympiads. Various nationalities for International Olympiads.",
+    other: [
+      "SOF Olympiads: Open to all students Class 1-12.",
+      "HBCSE Olympiads: Class 9-12 for most subjects.",
+      "Must not have joined any university/college.",
+      "Must have studied in India for past 3 years.",
+      "Must hold valid Indian passport.",
+    ],
+  },
+
+  examPattern: {
+    mode: "Offline Written Test (Various Stages)",
+    duration: "2-3 hours depending on stage",
+    totalMarks: 100,
+    totalQuestions: 6,
+    sections: [
+      {
+        subject: "Stage 1 (RMO/Pre-RMO)",
+        questions: 6,
+        marks: 100,
+        duration: "3 hours",
+        negativeMarking: "No negative marking",
+      },
+      {
+        subject: "Stage 2 (INMO/INPhO)",
+        questions: 6,
+        marks: 100,
+        duration: "4-5 hours",
+        negativeMarking: "No negative marking",
+      },
+      {
+        subject: "Stage 3 (IMO Training)",
+        questions: 8,
+        marks: 100,
+        duration: "Multiple tests",
+        negativeMarking: "No negative marking",
+      },
+    ],
+    markingScheme: {
+      correct: "Full marks for complete correct solution",
+      incorrect: "Partial marking for partial progress",
+      unattempted: "0 marks",
+    },
+    languages: ["English", "Hindi"],
+  },
+
+  syllabus: {
+    subjects: [
+      {
+        name: "Mathematics Olympiad",
+        iconName: "Calculator",
+        topics: [
+          "Number Theory",
+          "Algebra (Polynomials, Inequalities)",
+          "Combinatorics",
+          "Geometry (Euclidean)",
+          "Functional Equations",
+          "Complex Numbers",
+          "Graph Theory",
+        ],
+        weightage: "Varies",
+      },
+      {
+        name: "Physics Olympiad",
+        iconName: "Atom",
+        topics: [
+          "Mechanics",
+          "Thermodynamics",
+          "Electromagnetism",
+          "Waves and Oscillations",
+          "Optics",
+          "Modern Physics",
+          "Special Relativity",
+        ],
+        weightage: "Varies",
+      },
+      {
+        name: "Chemistry Olympiad",
+        iconName: "FlaskConical",
+        topics: [
+          "Physical Chemistry",
+          "Inorganic Chemistry",
+          "Organic Chemistry",
+          "Analytical Chemistry",
+          "Biochemistry",
+        ],
+        weightage: "Varies",
+      },
+      {
+        name: "Biology Olympiad",
+        iconName: "Microscope",
+        topics: [
+          "Cell Biology",
+          "Plant and Animal Physiology",
+          "Genetics and Evolution",
+          "Ecology",
+          "Ethology",
+          "Biosystematics",
+        ],
+        weightage: "Varies",
+      },
+      {
+        name: "Astronomy Olympiad",
+        iconName: "Globe",
+        topics: [
+          "Positional Astronomy",
+          "Telescopes and Instrumentation",
+          "Stellar Physics",
+          "Galactic Astronomy",
+          "Celestial Mechanics",
+        ],
+        weightage: "Varies",
+      },
+    ],
+    pdfLink: "https://olympiads.hbcse.tifr.res.in/",
+  },
+
+  importantDates: {
+    notification: "August - October 2026",
+    applicationStart: "September 2026",
+    applicationEnd: "October 2026",
+    admitCard: "October - November 2026",
+    examDate: "October - November 2026",
+    result: "December 2026",
+    counselling: "OCSC Training - April-May 2027",
+    dates: [
+      {
+        event: "Pre-RMO/IOQM Registration",
+        date: "August - September 2026",
+        isImportant: true,
+      },
+      {
+        event: "Pre-RMO/IOQM Exam",
+        date: "October 2026",
+        isImportant: true,
+      },
+      {
+        event: "RMO Results",
+        date: "November 2026",
+      },
+      {
+        event: "INMO/INPhO/INChO/INBO",
+        date: "January - February 2027",
+        isImportant: true,
+      },
+      {
+        event: "OCSC (Training Camp)",
+        date: "April - May 2027",
+        isImportant: true,
+      },
+      {
+        event: "International Olympiads",
+        date: "July - August 2027",
+        isImportant: true,
+      },
+      {
+        event: "SOF Olympiads Level 1",
+        date: "October - December 2026",
+      },
+      {
+        event: "SOF Olympiads Level 2",
+        date: "February 2027",
+      },
+    ],
+  },
+
+  preparationTips: [
+    {
+      title: "Start Early",
+      description:
+        "Olympiad preparation should ideally start from Class 8-9. The earlier you start, the better your foundation will be.",
+      iconName: "Clock",
+    },
+    {
+      title: "Solve International Problems",
+      description:
+        "Practice problems from past International Olympiads. Resources like AoPS (Art of Problem Solving) are excellent.",
+      iconName: "Globe",
+    },
+    {
+      title: "Join Olympiad Training Programs",
+      description:
+        "Many institutes offer specialized Olympiad training. Join them for structured preparation and mentorship.",
+      iconName: "School",
+    },
+    {
+      title: "Read Advanced Books",
+      description:
+        "Go beyond school textbooks. Read books like 'Challenge and Thrill of Pre-College Mathematics' for Math Olympiad.",
+      iconName: "BookOpen",
+    },
+    {
+      title: "Focus on Proof Writing",
+      description:
+        "Olympiads require rigorous proofs. Practice writing clear, logical solutions with proper justification.",
+      iconName: "FileText",
+    },
+    {
+      title: "Participate in Math Circles",
+      description:
+        "Join math circles and problem-solving groups. Discussing problems with peers enhances understanding.",
+      iconName: "Users",
+    },
+  ],
+
+  statistics: {
+    totalApplicants: "50,000+ (National Level)",
+    totalSeats: "6 per subject for International Olympiad",
+    qualificationRate: "0.01%",
+    successRate: "0.01% reach International level",
+    year: 2025,
+  },
+
+  resources: {
+    officialWebsite: "https://olympiads.hbcse.tifr.res.in/",
+    notificationPdf: "https://olympiads.hbcse.tifr.res.in/",
+    previousPapers: [
+      "https://olympiads.hbcse.tifr.res.in/",
+      "https://artofproblemsolving.com/",
+    ],
+    mockTests: ["https://sofworld.org/"],
+  },
+
+  relatedExams: ["KVPY", "NTSE", "NSTSE", "IMO", "ISO", "IEO"],
+
+  faqs: [
+    {
+      question: "What is the selection process for International Olympiads?",
+      answer:
+        "The selection process typically involves: 1) Pre-RMO/IOQM (Regional level), 2) RMO/INMO (National level), 3) IMOTC/OCSC (Training camp), 4) International Olympiad. For other subjects, the pattern is similar through INPhO, INChO, etc.",
+    },
+    {
+      question: "Can a Class 8 student appear for Olympiads?",
+      answer:
+        "Yes, for SOF Olympiads, students from Class 1 onwards can participate. For HBCSE Olympiads, students from Class 9 onwards can appear for Pre-RMO.",
+    },
+    {
+      question: "What are the benefits of clearing Olympiads?",
+      answer:
+        "Olympiad achievers get direct admission to top institutes like CMI, ISI, and IISc. International medalists often get direct admission to MIT, Stanford, and other top universities with full scholarships.",
+    },
+    {
+      question: "How difficult are Olympiads compared to JEE?",
+      answer:
+        "Olympiads are significantly more difficult than JEE. They focus on deep conceptual understanding, problem-solving creativity, and mathematical rigor rather than formula application.",
+    },
+    {
+      question: "Is coaching necessary for Olympiads?",
+      answer:
+        "While self-study is possible, good coaching can significantly help by providing structured guidance, advanced problem sets, and expert mentorship. However, self-motivation and consistent practice are most important.",
+    },
+  ],
+};
+
+// =============================================================================
+// EXAM LIST
+// =============================================================================
+
+export const allExams: ExamInfo[] = [jeeExam, neetExam, mhtcetExam, kvpyExam, olympiadsExam];
+
+export const examSlugs = allExams.map((exam) => exam.slug);
+
+export function getExamBySlug(slug: string): ExamInfo | undefined {
+  return allExams.find((exam) => exam.slug === slug);
+}
+
+export function getExamById(id: string): ExamInfo | undefined {
+  return allExams.find((exam) => exam.id === id);
+}
+
+export function getRelatedExams(examId: string, limit: number = 3): ExamInfo[] {
+  const currentExam = getExamById(examId);
+  if (!currentExam) return [];
+
+  return allExams
+    .filter(
+      (exam) =>
+        exam.id !== examId &&
+        (exam.category === currentExam.category ||
+          currentExam.relatedExams.some((rel) =>
+            exam.name.toLowerCase().includes(rel.toLowerCase())
+          ))
+    )
+    .slice(0, limit);
+}
+
+export default allExams;
