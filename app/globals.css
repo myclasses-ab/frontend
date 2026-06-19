@@ -136,3 +136,13 @@ body {
 .animate-slide-up {
   animation: slideUp var(--transition-base) forwards;
 }
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

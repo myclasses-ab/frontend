@@ -63,7 +63,7 @@ export function HeroSearch() {
       <form onSubmit={handleSearch} className="relative">
         <div className="flex flex-col sm:flex-row bg-white rounded-2xl shadow-xl shadow-black/10">
           {/* Course Input */}
-          <div className="flex-1 flex items-center gap-3 px-5 py-4 border-b sm:border-b-0 sm:border-r border-[var(--gray-200)]">
+          <div className="flex-1 min-w-0 flex items-center gap-3 px-4 sm:px-5 py-3.5 sm:py-4 border-b sm:border-b-0 sm:border-r border-[var(--gray-200)] rounded-tl-2xl rounded-tr-2xl sm:rounded-tr-none sm:rounded-bl-2xl">
             <Search className="w-5 h-5 text-[var(--gray-400)] flex-shrink-0" />
             <input
               type="text"
@@ -76,7 +76,7 @@ export function HeroSearch() {
           </div>
 
           {/* City Input */}
-          <div className="relative flex-1 flex items-center gap-3 px-5 py-4" ref={dropdownRef}>
+          <div className="relative flex-1 min-w-0 flex items-center gap-3 px-4 sm:px-5 py-3.5 sm:py-4" ref={dropdownRef}>
             <MapPin className="w-5 h-5 text-[var(--gray-400)] flex-shrink-0" />
             <input
               type="text"
@@ -128,7 +128,7 @@ export function HeroSearch() {
           {/* Search Button */}
           <button
             type="submit"
-            className="px-8 py-4 cursor-pointer bg-[var(--accent-green)] hover:bg-[#059669] rounded-r-2xl text-white font-semibold text-lg transition-colors flex items-center justify-center gap-2"
+            className="px-6 sm:px-8 py-3.5 sm:py-4 cursor-pointer bg-[var(--accent-green)] hover:bg-[#059669] rounded-bl-2xl rounded-br-2xl sm:rounded-bl-none sm:rounded-tr-2xl text-white font-semibold text-base sm:text-lg transition-colors flex items-center justify-center gap-2"
           >
             <Search className="w-5 h-5" />
             Search

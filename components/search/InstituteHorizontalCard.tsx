@@ -122,7 +122,7 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
     >
       <div className="flex flex-col md:flex-row h-auto md:h-[280px]">
         {/* Image Section */}
-        <div className="relative w-full md:w-80 lg:w-96 flex-shrink-0 h-56 md:h-full overflow-hidden bg-[var(--gray-100)]">
+        <div className="relative w-full md:w-80 lg:w-96 flex-shrink-0 h-48 sm:h-56 md:h-full overflow-hidden bg-[var(--gray-100)]">
           <SafeImg
             src={instituteBannerUrl(institute.bannerUrl) || FALLBACK_BANNER_URL}
             fallbackSrc={FALLBACK_BANNER_URL}
@@ -217,7 +217,7 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
           </div>
 
           {/* Footer Actions */}
-          <div className="mt-5 flex items-center justify-between gap-4">
+          <div className="mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
             <div className="flex items-center gap-2 text-sm text-[var(--gray-500)]">
               <Building2 className="w-4 h-4" />
               <span>{isAuthenticated ? 'Click to view full details' : 'Login required to view details'}</span>
@@ -228,7 +228,7 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
                   ? `/institutes/${institute.slug}`
                   : `/login?redirect=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname + window.location.search : '/')}`
               }
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--primary)] hover:bg-[var(--primary-700)] text-white font-medium rounded-xl transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[var(--primary)] hover:bg-[var(--primary-700)] text-white font-medium rounded-xl transition-colors w-full sm:w-auto"
             >
               {isAuthenticated ? 'View Details' : 'Login'}
               <ArrowRight className="w-4 h-4" />

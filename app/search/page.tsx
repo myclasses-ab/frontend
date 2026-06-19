@@ -157,7 +157,7 @@ function SearchContent() {
   return (
     <div className="min-h-screen bg-[var(--gray-50)]">
       {/* Top Search Bar */}
-      <div className="bg-white border-b border-[var(--gray-200)] sticky top-0 z-30">
+      <div className="bg-white border-b border-[var(--gray-200)] relative sm:sticky sm:top-0 sm:z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             {/* Logo / Back */}
@@ -168,8 +168,8 @@ function SearchContent() {
 
             {/* Search Form */}
             <form onSubmit={handleSearch} className="flex-1 w-full">
-              <div className="flex items-center bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-xl focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary-100)] transition-all">
-                <div className="flex-1 flex items-center gap-2 px-4 py-2.5 border-r border-[var(--gray-200)] rounded-l-xl">
+              <div className="flex flex-col sm:flex-row items-stretch bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-xl focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary-100)] transition-all">
+                <div className="flex-1 w-full min-w-0 flex items-center gap-2 px-4 py-2.5 border-b sm:border-b-0 sm:border-r border-[var(--gray-200)] rounded-tl-xl rounded-tr-xl sm:rounded-tr-none sm:rounded-bl-xl">
                   <Search className="w-4 h-4 text-[var(--gray-400)] flex-shrink-0" />
                   <input
                     type="text"
@@ -193,7 +193,7 @@ function SearchContent() {
                   )}
                 </div>
                 <div
-                  className="relative flex items-center gap-2 px-4 py-2.5 text-sm text-[var(--gray-500)] w-[260px] sm:w-[320px]"
+                  className="relative w-full sm:w-[320px] flex items-center gap-2 px-4 py-2.5 text-sm text-[var(--gray-500)]"
                   ref={cityDropdownRef}
                 >
                   <MapPin className="w-4 h-4 flex-shrink-0" />
@@ -263,7 +263,7 @@ function SearchContent() {
                 </div>
                 <button
                   type="submit"
-                  className="px-5 py-3 bg-[var(--accent-green)] hover:bg-[#059669] text-white text-sm font-medium transition-colors flex-shrink-0 rounded-r-xl"
+                  className="px-5 py-3 bg-[var(--accent-green)] hover:bg-[#059669] text-white text-sm font-medium transition-colors flex-shrink-0 rounded-bl-xl rounded-br-xl sm:rounded-bl-none sm:rounded-tr-xl"
                 >
                   Search
                 </button>

@@ -158,16 +158,16 @@ function CoursesTab({ instituteIdentifier, instituteName }: { instituteIdentifie
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[var(--gray-900)] flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-[var(--primary)]" />
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--gray-900)] flex items-center gap-2">
+            <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--primary)]" />
             Our Courses
           </h2>
           <p className="text-[var(--gray-600)] mt-1">
             {instituteCourses.length} courses available
           </p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-medium">
-          <Sparkles className="w-4 h-4" />
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-xs sm:text-sm font-medium">
+          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           {instituteCourses.filter(c => c.admissionOpen).length} Admissions Open
         </div>
       </div>
@@ -249,12 +249,12 @@ function CourseCardSimple({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="bg-white rounded-2xl p-6 shadow-sm border border-[var(--gray-200)] hover:shadow-md transition-shadow flex flex-col h-full"
+      className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-[var(--gray-200)] hover:shadow-md transition-shadow flex flex-col h-full"
     >
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-4">
+      <div className="flex items-start justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-[var(--gray-900)] leading-tight">
+          <h3 className="text-base sm:text-lg font-semibold text-[var(--gray-900)] leading-tight">
             {displayName}
           </h3>
           <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -284,7 +284,7 @@ function CourseCardSimple({
         <div className="flex items-baseline gap-2">
           {course.fee ? (
             <>
-              <span className="text-2xl font-bold text-[var(--gray-900)]">
+              <span className="text-xl sm:text-2xl font-bold text-[var(--gray-900)]">
                 ₹{Number(course.fee).toLocaleString()}
               </span>
               {course.durationMonths && (
@@ -317,7 +317,7 @@ function CourseCardSimple({
       <button
         onClick={handleBookDemo}
         disabled={isBooking}
-        className="w-full mt-auto pt-4 py-2.5 bg-[var(--primary)] text-white font-medium rounded-xl hover:bg-[var(--primary-600)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full mt-auto py-2.5 bg-[var(--primary)] text-white font-medium rounded-xl hover:bg-[var(--primary-600)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isBooking ? 'Sending...' : 'Book a Demo'}
       </button>
@@ -442,8 +442,8 @@ function ResultsTab({ instituteIdentifier }: { instituteIdentifier: string }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[var(--gray-900)] flex items-center gap-2">
-            <Trophy className="w-6 h-6 text-[var(--primary)]" />
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--gray-900)] flex items-center gap-2">
+            <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--primary)]" />
             Results & Achievements
           </h2>
           <p className="text-[var(--gray-600)] mt-1">
@@ -585,8 +585,8 @@ function ReviewsTab({ instituteIdentifier, instituteName }: { instituteIdentifie
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[var(--gray-900)] flex items-center gap-2">
-            <MessageSquare className="w-6 h-6 text-[var(--primary)]" />
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--gray-900)] flex items-center gap-2">
+            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--primary)]" />
             Student Reviews
           </h2>
           <p className="text-[var(--gray-600)] mt-1">
@@ -595,9 +595,9 @@ function ReviewsTab({ instituteIdentifier, instituteName }: { instituteIdentifie
         </div>
         <button
           onClick={() => setShowReviewForm(true)}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[var(--primary)] text-white font-medium rounded-lg hover:bg-[var(--primary-600)] transition-colors"
+          className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-[var(--primary)] text-white font-medium rounded-lg hover:bg-[var(--primary-600)] transition-colors text-sm sm:text-base"
         >
-          <PenSquare className="w-4 h-4" />
+          <PenSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           Write a Review
         </button>
       </div>
@@ -609,7 +609,7 @@ function ReviewsTab({ instituteIdentifier, instituteName }: { instituteIdentifie
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4"
             onClick={() => setShowReviewForm(false)}
           >
             <div onClick={e => e.stopPropagation()}>
@@ -816,13 +816,13 @@ export default function InstituteDetailPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[var(--gray-50)]">
-        <div className="h-64 lg:h-80 bg-[var(--gray-300)] animate-pulse" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
-          <div className="flex flex-col sm:flex-row gap-6">
-            <div className="w-24 h-24 lg:w-28 lg:h-28 bg-[var(--gray-300)] rounded-2xl animate-pulse" />
-            <div className="flex-1 space-y-3 pt-4">
-              <div className="h-8 bg-[var(--gray-300)] rounded w-1/3 animate-pulse" />
-              <div className="h-4 bg-[var(--gray-300)] rounded w-1/4 animate-pulse" />
+        <div className="h-56 sm:h-64 lg:h-80 bg-[var(--gray-300)] animate-pulse" />
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 -mt-12 sm:-mt-16 relative z-10">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row gap-3 sm:gap-6 items-start sm:items-center">
+            <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-[var(--gray-300)] rounded-xl sm:rounded-2xl animate-pulse mx-0" />
+            <div className="flex-1 space-y-3 pt-0 sm:pt-4 text-center sm:text-left">
+              <div className="h-7 sm:h-8 bg-[var(--gray-300)] rounded w-2/3 sm:w-1/3 animate-pulse mx-auto sm:mx-0" />
+              <div className="h-4 bg-[var(--gray-300)] rounded w-1/2 sm:w-1/4 animate-pulse mx-auto sm:mx-0" />
             </div>
           </div>
         </div>
@@ -879,10 +879,10 @@ export default function InstituteDetailPage() {
       <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
         {!isAuthenticated && (
-          <div className="relative mb-8">
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-4">
+          <div className="relative mb-6 sm:mb-8">
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
               <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
                 <Lock className="w-6 h-6 text-amber-600" />
               </div>
@@ -928,7 +928,7 @@ export default function InstituteDetailPage() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-[var(--gray-200)]"
+                  className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-[var(--gray-200)]"
                 >
                   <h3 className="text-lg font-bold text-[var(--gray-900)] mb-4 flex items-center gap-2">
                     <Award className="w-5 h-5 text-[var(--accent-orange)]" />
@@ -975,7 +975,7 @@ export default function InstituteDetailPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4"
             onClick={() => setShowInquiryForm(false)}
           >
             <div onClick={(e) => e.stopPropagation()}>
