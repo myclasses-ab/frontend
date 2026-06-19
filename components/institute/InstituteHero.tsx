@@ -67,7 +67,7 @@ export function InstituteHero({ institute }: InstituteHeroProps) {
   return (
     <div className="relative">
       {/* Banner */}
-      <div className="relative h-56 sm:h-64 lg:h-80">
+      <div className="relative h-64 sm:h-72 lg:h-80">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/80 z-10" />
         <SafeImage
           src={instituteBannerUrl(bannerUrl) || FALLBACK_BANNER_URL}
@@ -93,15 +93,17 @@ export function InstituteHero({ institute }: InstituteHeroProps) {
         {/* Content Overlay */}
         <div className="absolute inset-0 z-20 flex items-end">
           <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-start sm:items-center p-4 sm:p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg w-full sm:w-fit pt-20">
-              {/* Logo */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="flex-shrink-0"
-              >
-                <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-xl sm:rounded-2xl bg-white shadow-xl p-1.5 sm:p-2 flex items-center justify-center mx-0">
+            <div className="flex flex-col gap-2 sm:gap-4 p-3 sm:p-4 lg:p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg w-full sm:w-fit pt-4 sm:pt-6 lg:pt-6">
+              {/* Logo + Info */}
+              <div className="flex flex-row gap-3 sm:gap-6 items-start sm:items-center">
+                {/* Logo */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex-shrink-0"
+                >
+                <div className="w-14 h-14 sm:w-20 sm:h-20 lg:w-28 lg:h-28 rounded-xl sm:rounded-2xl bg-white shadow-xl p-1.5 sm:p-2 flex items-center justify-center mx-0">
                   <SafeImage
                     src={instituteLogoUrl(logoUrl) || FALLBACK_LOGO_URL}
                     fallbackSrc={FALLBACK_LOGO_URL}
@@ -148,43 +150,44 @@ export function InstituteHero({ institute }: InstituteHeroProps) {
                       {tagline}
                     </p>
                   )}
-
-                  {/* Rating & Quick Stats */}
-                  <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-4 mt-2 sm:mt-3">
-                    {/* Rating */}
-                    <div className="flex items-center justify-start sm:justify-center gap-1 bg-white/10 backdrop-blur-md px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
-                      <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
-                      <span className="font-bold text-white text-sm sm:text-base">{Number(averageRating).toFixed(1)}</span>
-                      <span className="text-white/70 text-xs sm:text-sm hidden sm:inline">({totalReviews} reviews)</span>
-                    </div>
-
-                    {/* Experience */}
-                    <div className="flex items-center justify-start sm:justify-center gap-1 text-white/80 text-xs sm:text-sm">
-                      <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      <span>{yearsOfExperience}+ years</span>
-                    </div>
-
-                    {/* Students */}
-                    <div className="flex items-center justify-start sm:justify-center gap-1 text-white/80 text-xs sm:text-sm">
-                      <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      <span>{formatNumber(totalStudentsEnrolled)}+ students</span>
-                    </div>
-
-                    {/* Founded */}
-                    {foundedYear > 0 && (
-                      <div className="flex items-center justify-start sm:justify-center gap-1 text-white/80 text-xs sm:text-sm">
-                        <span>Since {foundedYear}</span>
-                      </div>
-                    )}
-                  </div>
                 </motion.div>
               </div>
+            </div>
+
+            {/* Rating & Quick Stats */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+              {/* Rating */}
+              <div className="flex items-center justify-start sm:justify-center gap-1 bg-white/10 backdrop-blur-md px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
+                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
+                <span className="font-bold text-white text-sm sm:text-base">{Number(averageRating).toFixed(1)}</span>
+                <span className="text-white/70 text-xs sm:text-sm hidden sm:inline">({totalReviews} reviews)</span>
+              </div>
+
+              {/* Experience */}
+              <div className="flex items-center justify-start sm:justify-center gap-1 text-white/80 text-xs sm:text-sm">
+                <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span>{yearsOfExperience}+ years</span>
+              </div>
+
+              {/* Students */}
+              <div className="flex items-center justify-start sm:justify-center gap-1 text-white/80 text-xs sm:text-sm">
+                <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span>{formatNumber(totalStudentsEnrolled)}+ students</span>
+              </div>
+
+              {/* Founded */}
+              {foundedYear > 0 && (
+                <div className="flex items-center justify-start sm:justify-center gap-1 text-white/80 text-xs sm:text-sm">
+                  <span>Since {foundedYear}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 function formatNumber(num: number | null | undefined): string {
