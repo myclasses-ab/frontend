@@ -12,6 +12,7 @@ import {
   MapPin,
   GraduationCap,
   Crosshair,
+  Loader2,
 } from 'lucide-react';
 import {
   FilterSidebar,
@@ -24,6 +25,7 @@ import { useAuth } from '@/context/AuthContext';
 import { City } from '@/types';
 import { cityApi } from '@/api';
 import { CITIES } from '@/components/helper/cities';
+import { detectNearestCity } from '@/lib/location';
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -37,6 +39,7 @@ function SearchContent() {
   const cityDropdownRef = useRef<HTMLDivElement>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedCityName, setSelectedCityName] = useState<string>(initialCityName);
+  const [isLocating, setIsLocating] = useState(false);
   const { trackSearch } = useLeadTracking();
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const hasTrackedRef = useRef(false);
@@ -132,16 +135,23 @@ function SearchContent() {
     setSortOrder(newSortOrder);
   };
 
-  const handleNearMe = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          setCityQuery('Near Me');
-          setShowCityDropdown(false);
-        },
-        () => {}
-      );
+  const handleNearMe = async () => {
+    setIsLocating(true);
+    setShowCityDropdown(false);
+
+    const result = await detectNearestCity(CITIES);
+
+    if (result.city) {
+      setCityQuery(result.city);
+      setSelectedCityName(result.city);
+      setFilters((prev) => ({
+        ...prev,
+        cityName: result.city as string,
+        cityIdentifier: '',
+      }));
     }
+
+    setIsLocating(false);
   };
 
   return (
@@ -214,10 +224,15 @@ function SearchContent() {
                   <button
                     type="button"
                     onClick={handleNearMe}
-                    className="hidden sm:flex items-center gap-1 px-2 py-1 bg-[var(--gray-100)] hover:bg-[var(--gray-200)] rounded-full text-xs font-medium text-[var(--gray-600)] transition-colors flex-shrink-0"
+                    disabled={isLocating}
+                    className="hidden sm:flex items-center gap-1 px-2 py-1 bg-[var(--gray-100)] hover:bg-[var(--gray-200)] disabled:opacity-60 disabled:cursor-not-allowed rounded-full text-xs font-medium text-[var(--gray-600)] transition-colors flex-shrink-0"
                   >
-                    <Crosshair className="w-3 h-3" />
-                    Near me
+                    {isLocating ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Crosshair className="w-3 h-3" />
+                    )}
+                    {isLocating ? 'Locating...' : 'Near me'}
                   </button>
 
                   {/* City Suggestions Dropdown */}

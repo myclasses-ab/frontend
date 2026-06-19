@@ -3,14 +3,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Search, MapPin, Crosshair } from 'lucide-react';
+import { Search, MapPin, Crosshair, Loader2 } from 'lucide-react';
 import { CITIES } from '@/components/helper/cities';
+import { detectNearestCity } from '@/lib/location';
 
 export function HeroSearch() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [cityQuery, setCityQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const suggestions =
@@ -38,13 +40,17 @@ export function HeroSearch() {
     router.push(`/search?${params.toString()}`);
   };
 
-  const handleNearMe = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        () => setCityQuery('Near Me'),
-        () => {}
-      );
+  const handleNearMe = async () => {
+    setIsLocating(true);
+    setShowDropdown(false);
+
+    const result = await detectNearestCity(CITIES);
+
+    if (result.city) {
+      setCityQuery(result.city);
     }
+
+    setIsLocating(false);
   };
 
   return (
@@ -87,10 +93,15 @@ export function HeroSearch() {
             <button
               type="button"
               onClick={handleNearMe}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--gray-100)] hover:bg-[var(--gray-200)] rounded-full text-xs font-medium text-[var(--gray-600)] transition-colors flex-shrink-0"
+              disabled={isLocating}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--gray-100)] hover:bg-[var(--gray-200)] disabled:opacity-60 disabled:cursor-not-allowed rounded-full text-xs font-medium text-[var(--gray-600)] transition-colors flex-shrink-0"
             >
-              <Crosshair className="w-3.5 h-3.5" />
-              Near me
+              {isLocating ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                <Crosshair className="w-3.5 h-3.5" />
+              )}
+              {isLocating ? 'Locating...' : 'Near me'}
             </button>
 
             {/* Suggestions Dropdown */}

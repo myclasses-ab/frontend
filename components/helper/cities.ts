@@ -34,6 +34,7 @@ export const CITIES: string[] = [
   "Dahisar",
   "Mira Road",
   "Bhayandar",
+  "Bhayander",
   "Naigaon",
   "Vasai",
   "Virar",
