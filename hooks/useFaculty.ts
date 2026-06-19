@@ -42,9 +42,8 @@ export function useFaculty(options: UseFacultyOptions = {}): UseFacultyReturn {
         data = await facultyApi.getAll();
       }
 
-      // Sort by display order and active status
+      // Sort by display order and rating
       data = data
-        .filter(f => f.isActive)
         .sort((a, b) => {
           // First by display order
           if (a.displayOrder !== b.displayOrder) {
@@ -106,43 +105,4 @@ export function useFacultyMember(identifier: string) {
   return { facultyMember, isLoading, error };
 }
 
-// Hook for fetching featured faculty (IIT/IIM background)
-export function useFeaturedFaculty(limit?: number) {
-  const [faculty, setFaculty] = useState<Faculty[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const fetchFeaturedFaculty = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        // Fetch both IIT/IIM and NIT background faculty
-        const [iitFaculty, nitFaculty] = await Promise.all([
-          facultyApi.findByIitIimBackground(),
-          facultyApi.findByNitBackground(),
-        ]);
-
-        // Combine and remove duplicates
-        const combined = [...iitFaculty, ...nitFaculty];
-        const unique = combined.filter((f, index, self) => 
-          index === self.findIndex(t => t.identifier === f.identifier)
-        );
-
-        // Sort by rating
-        unique.sort((a, b) => Number(b.studentRating) - Number(a.studentRating));
-
-        setFaculty(limit ? unique.slice(0, limit) : unique);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to fetch featured faculty'));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchFeaturedFaculty();
-  }, [limit]);
-
-  return { faculty, isLoading, error };
-}

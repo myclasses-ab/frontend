@@ -120,7 +120,7 @@ export function useSearch(query: string): UseSearchReturn {
     // Filter faculty
     let faculty = allFaculty.filter((f) => {
       if (!lowerQuery) return true;
-      const searchableText = `${f.name} ${f.qualification} ${f.specialization || ''} ${f.bio || ''}`.toLowerCase();
+      const searchableText = `${f.name} ${f.qualification}`.toLowerCase();
       return searchableText.includes(lowerQuery);
     });
 

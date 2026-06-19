@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Users, Search, Filter, Award, GraduationCap, Clock } from 'lucide-react';
+import { Users, Search, Filter, Clock } from 'lucide-react';
 import { Faculty } from '@/types';
 import { FacultyCard } from './FacultyCard';
 import { useState, useMemo } from 'react';
@@ -26,7 +26,6 @@ export function FacultyGrid({
   featuredFirst = true,
 }: FacultyGridProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterBackground, setFilterBackground] = useState<'all' | 'iit' | 'nit'>('all');
   const [filterExperience, setFilterExperience] = useState<'all' | '5+' | '10+' | '15+'>('all');
 
   // Filter and sort faculty
@@ -39,18 +38,8 @@ export function FacultyGrid({
       result = result.filter(
         (f) =>
           f.name.toLowerCase().includes(query) ||
-          f.specialization?.toLowerCase().includes(query) ||
           f.designation.toLowerCase().includes(query)
       );
-    }
-
-    // Background filter
-    if (filterBackground !== 'all') {
-      if (filterBackground === 'iit') {
-        result = result.filter((f) => f.iitIimBackground);
-      } else if (filterBackground === 'nit') {
-        result = result.filter((f) => f.nitBackground);
-      }
     }
 
     // Experience filter
@@ -59,40 +48,28 @@ export function FacultyGrid({
       result = result.filter((f) => f.experienceYears >= minYears);
     }
 
-    // Sort: Featured first (IIT/IIM/NIT), then by rating
+    // Sort by display order and rating
     if (featuredFirst) {
       result.sort((a, b) => {
-        const aFeatured = a.iitIimBackground || a.nitBackground;
-        const bFeatured = b.iitIimBackground || b.nitBackground;
-        if (aFeatured && !bFeatured) return -1;
-        if (!aFeatured && bFeatured) return 1;
+        if (a.displayOrder !== b.displayOrder) {
+          return a.displayOrder - b.displayOrder;
+        }
         return Number(b.studentRating) - Number(a.studentRating);
       });
     }
 
     return result;
-  }, [faculty, searchQuery, filterBackground, filterExperience, featuredFirst]);
+  }, [faculty, searchQuery, filterExperience, featuredFirst]);
 
   // Calculate stats
   const stats = useMemo(() => {
     const total = faculty.length;
-    const iitCount = faculty.filter((f) => f.iitIimBackground).length;
-    const nitCount = faculty.filter((f) => f.nitBackground).length;
-    const avgExperience = total > 0 
+    const avgExperience = total > 0
       ? Math.round(faculty.reduce((sum, f) => sum + f.experienceYears, 0) / total)
       : 0;
 
-    return { total, iitCount, nitCount, avgExperience };
+    return { total, avgExperience };
   }, [faculty]);
-
-  // Get featured faculty
-  const featuredFaculty = useMemo(() => {
-    return filteredFaculty.filter((f) => f.iitIimBackground || f.nitBackground).slice(0, 2);
-  }, [filteredFaculty]);
-
-  const regularFaculty = useMemo(() => {
-    return filteredFaculty.filter((f) => !f.iitIimBackground && !f.nitBackground);
-  }, [filteredFaculty]);
 
   if (isLoading) {
     return (
@@ -142,16 +119,6 @@ export function FacultyGrid({
             <p className="text-sm text-[var(--gray-500)]">Total Faculty</p>
           </div>
           <div className="p-4 bg-white rounded-xl border border-[var(--gray-200)] text-center">
-            <Award className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-[var(--gray-900)]">{stats.iitCount}</p>
-            <p className="text-sm text-[var(--gray-500)]">IIT/IIM Alumni</p>
-          </div>
-          <div className="p-4 bg-white rounded-xl border border-[var(--gray-200)] text-center">
-            <GraduationCap className="w-6 h-6 text-blue-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-[var(--gray-900)]">{stats.nitCount}</p>
-            <p className="text-sm text-[var(--gray-500)]">NIT Alumni</p>
-          </div>
-          <div className="p-4 bg-white rounded-xl border border-[var(--gray-200)] text-center">
             <Clock className="w-6 h-6 text-green-500 mx-auto mb-2" />
             <p className="text-2xl font-bold text-[var(--gray-900)]">{stats.avgExperience}+</p>
             <p className="text-sm text-[var(--gray-500)]">Avg Experience</p>
@@ -180,72 +147,34 @@ export function FacultyGrid({
               />
             </div>
 
-            {/* Background Filter */}
+            {/* Experience Filter */}
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-[var(--gray-400)]" />
               <select
-                value={filterBackground}
-                onChange={(e) => setFilterBackground(e.target.value as any)}
+                value={filterExperience}
+                onChange={(e) => setFilterExperience(e.target.value as any)}
                 className="px-3 py-2 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary-200)] focus:border-[var(--primary)]"
               >
-                <option value="all">All Backgrounds</option>
-                <option value="iit">IIT/IIM Alumni</option>
-                <option value="nit">NIT Alumni</option>
+                <option value="all">All Experience</option>
+                <option value="5+">5+ years</option>
+                <option value="10+">10+ years</option>
+                <option value="15+">15+ years</option>
               </select>
             </div>
-
-            {/* Experience Filter */}
-            <select
-              value={filterExperience}
-              onChange={(e) => setFilterExperience(e.target.value as any)}
-              className="px-3 py-2 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary-200)] focus:border-[var(--primary)]"
-            >
-              <option value="all">All Experience</option>
-              <option value="5+">5+ years</option>
-              <option value="10+">10+ years</option>
-              <option value="15+">15+ years</option>
-            </select>
           </div>
         </motion.div>
       )}
 
-      {/* Featured Faculty Section */}
-      {featuredFaculty.length > 0 && filterBackground !== 'all' && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-4"
-        >
-          <h3 className="text-lg font-semibold text-[var(--gray-900)] flex items-center gap-2">
-            <Award className="w-5 h-5 text-amber-500" />
-            Featured Faculty
-          </h3>
-          <div className="grid gap-6">
-            {featuredFaculty.map((f, i) => (
-              <FacultyCard key={f.identifier} faculty={f} index={i} variant="featured" />
-            ))}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Regular Faculty Grid */}
+      {/* Faculty Grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
       >
-        {filterBackground === 'all' ? (
-          // Show all faculty when no background filter
-          filteredFaculty.map((f, i) => (
-            <FacultyCard key={f.identifier} faculty={f} index={i} />
-          ))
-        ) : (
-          // Show only non-featured when filter is applied
-          regularFaculty.map((f, i) => (
-            <FacultyCard key={f.identifier} faculty={f} index={i} />
-          ))
-        )}
+        {filteredFaculty.map((f, i) => (
+          <FacultyCard key={f.identifier} faculty={f} index={i} />
+        ))}
       </motion.div>
 
       {/* Empty State */}
