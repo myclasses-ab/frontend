@@ -3,6 +3,7 @@
  * Institute core entities - institutes, branches, and facilities
  */
 
+import { InstituteCourse } from './course';
 import { InstituteType, OwnershipType, SubscriptionTier } from './enums';
 
 /**
@@ -39,6 +40,7 @@ export interface Institute {
   updatedAt: string;
   createdBy: string;
   facilities?: InstituteFacility;
+  matchingCourses?: InstituteCourse[];
 }
 
 /**

@@ -232,6 +232,8 @@ function CourseCardSimple({
         utmSource: '',
         utmMedium: '',
         utmCampaign: '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
       alert('Demo request sent! The institute will contact you soon.');
     } catch (err) {

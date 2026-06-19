@@ -21,8 +21,9 @@ import {
   Award,
   Calendar,
   TrendingUp,
+  IndianRupee,
 } from 'lucide-react';
-import { Institute, InstituteType } from '@/types';
+import { Institute, InstituteCourse, InstituteType } from '@/types';
 import { instituteBannerUrl, FALLBACK_BANNER_URL } from '@/components/helper/imageHelper';
 import { SafeImg } from '@/components/helper/SafeImage';
 import { useAuth } from '@/context/AuthContext';
@@ -57,6 +58,27 @@ function getTypeColor(type: InstituteType) {
       return 'bg-gray-50 text-gray-700 border-gray-200';
   }
 }
+
+function formatFee(fee: number | string): string {
+  const numFee = Number(fee);
+  if (numFee >= 100000) {
+    return `₹${(numFee / 100000).toFixed(1)}L`;
+  }
+  if (numFee >= 1000) {
+    return `₹${(numFee / 1000).toFixed(0)}K`;
+  }
+  return `₹${numFee}`;
+}
+
+function getFeeRange(courses: InstituteCourse[] | undefined): { min: number; max: number } | null {
+  if (!courses || courses.length === 0) return null;
+  const fees = courses
+    .map((c) => Number(c.fee))
+    .filter((f) => !isNaN(f) && f > 0);
+  if (fees.length === 0) return null;
+  return { min: Math.min(...fees), max: Math.max(...fees) };
+}
+
 
 export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHorizontalCardProps) {
   const { isAuthenticated } = useAuth();
@@ -157,6 +179,21 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
                 <Users className="w-4 h-4 text-[var(--gray-400)]" />
                 <span>{institute.totalStudentsEnrolled > 0 ? `${institute.totalStudentsEnrolled.toLocaleString()}+ students` : '0+ students'}</span>
               </div>
+
+              {(() => {
+                const feeRange = getFeeRange(institute.matchingCourses);
+                if (!feeRange) return null;
+                return (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 rounded-lg">
+                    <IndianRupee className="w-4 h-4 text-green-600" />
+                    <span className="text-sm font-semibold text-green-700">
+                      {feeRange.min === feeRange.max
+                        ? `${formatFee(feeRange.min)}/year`
+                        : `From ${formatFee(feeRange.min)}/year`}
+                    </span>
+                  </div>
+                );
+              })()}
             </div>
 
             {/* Amenities */}
