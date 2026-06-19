@@ -20,7 +20,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Add auth token if available
-    const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('studentAuthToken') : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
         case 401:
           // Unauthorized - redirect to login
           if (typeof window !== 'undefined') {
-            localStorage.removeItem('authToken');
+            localStorage.removeItem('studentAuthToken');
             window.location.href = '/login';
           }
           break;

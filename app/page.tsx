@@ -3,16 +3,10 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import {
-  InstituteCard,
-  InstituteCardSkeleton,
-} from '@/components/institute';
-import { useInstitutes } from '@/hooks/useInstitutes';
-import {
   Building2,
   Users,
   Award,
   Star,
-  ArrowRight,
   CheckCircle,
   Sparkles,
   MapPin,
@@ -58,8 +52,6 @@ const stats = [
 ];
 
 export default function Home() {
-  const { filteredInstitutes, isLoading } = useInstitutes({ featured: true, limit: 4 });
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -153,79 +145,6 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Featured Institutes Section */}
-      <section className="py-20 lg:py-28 bg-[var(--gray-50)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12">
-            <div>
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--primary-100)] rounded-full text-[var(--primary)] text-sm font-medium mb-3"
-              >
-                <Star className="w-4 h-4" />
-                <span>Top Rated</span>
-              </motion.div>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-3xl lg:text-4xl font-bold text-[var(--gray-900)]"
-              >
-                Featured Institutes
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="mt-2 text-[var(--gray-600)]"
-              >
-                Hand-picked top coaching institutes with excellent track records
-              </motion.p>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-[var(--gray-200)] text-[var(--gray-700)] font-medium rounded-xl hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
-              >
-                View All Institutes
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Institutes Grid */}
-          {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, i) => (
-                <InstituteCardSkeleton key={i} index={i} />
-              ))}
-            </div>
-          ) : filteredInstitutes.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredInstitutes.map((institute, index) => (
-                <InstituteCard
-                  key={institute.identifier}
-                  institute={institute}
-                  index={index}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-[var(--gray-600)]">No featured institutes available</p>
-            </div>
-          )}
         </div>
       </section>
 

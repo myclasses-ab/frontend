@@ -12,6 +12,15 @@ import {
   Shield,
   ArrowRight,
   Building2,
+  Bus,
+  UtensilsCrossed,
+  Wind,
+  FlaskConical,
+  FileText,
+  Zap,
+  Award,
+  Calendar,
+  TrendingUp,
 } from 'lucide-react';
 import { Institute, InstituteType } from '@/types';
 import { instituteBannerUrl, FALLBACK_BANNER_URL } from '@/components/helper/imageHelper';
@@ -56,12 +65,32 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
     ? parseFloat(institute.averageRating) || 0
     : institute.averageRating || 0;
 
-  const amenities = [
-    { icon: Wifi, label: 'WiFi', show: true },
-    { icon: BookOpen, label: 'Study Material', show: true },
-    { icon: MonitorPlay, label: 'Online Classes', show: true },
-    { icon: Users, label: 'Doubt Sessions', show: true },
-  ];
+  const facilityConfig = [
+    { key: 'hasWifi', label: 'WiFi', icon: Wifi },
+    { key: 'hasStudyMaterial', label: 'Study Material', icon: BookOpen },
+    { key: 'hasLibrary', label: 'Library', icon: BookOpen },
+    { key: 'hasDoubtSessions', label: 'Doubt Sessions', icon: Users },
+    { key: 'hasOnlinePortal', label: 'Online Portal', icon: MonitorPlay },
+    { key: 'hasDigitalBoards', label: 'Digital Boards', icon: MonitorPlay },
+    { key: 'hasHostel', label: 'Hostel', icon: Building2 },
+    { key: 'hasCanteen', label: 'Canteen', icon: UtensilsCrossed },
+    { key: 'hasTransport', label: 'Transport', icon: Bus },
+    { key: 'hasAcClassrooms', label: 'AC Classrooms', icon: Wind },
+    { key: 'hasLaboratory', label: 'Laboratory', icon: FlaskConical },
+    { key: 'hasStudyRoom', label: 'Study Room', icon: BookOpen },
+    { key: 'hasCctv', label: 'CCTV', icon: Shield },
+    { key: 'hasMockTestSeries', label: 'Mock Tests', icon: FileText },
+    { key: 'hasCrashCourses', label: 'Crash Courses', icon: Zap },
+    { key: 'hasScholarshipProgram', label: 'Scholarship', icon: Award },
+    { key: 'hasFreeDemoClass', label: 'Free Demo', icon: Calendar },
+    { key: 'hasParentTeacherMeetings', label: 'PTM', icon: Users },
+    { key: 'hasPerformanceTracking', label: 'Performance Tracking', icon: TrendingUp },
+  ] as const;
+
+  const facilityMap = institute.facilities as Record<string, boolean> | undefined;
+  const availableAmenities = facilityConfig.filter((f) => facilityMap?.[f.key]);
+  const displayedAmenities = availableAmenities.slice(0, 4);
+  const moreCount = availableAmenities.length - displayedAmenities.length;
 
   return (
     <motion.div
@@ -133,11 +162,6 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
                 </div>
               )}
 
-              <div className={`flex items-center gap-1.5 text-sm text-[var(--gray-600)] ${!(institute.yearsOfExperience > 0 && isAuthenticated) ? 'invisible' : ''}`}>
-                <Shield className="w-4 h-4 text-[var(--gray-400)]" />
-                <span>{institute.yearsOfExperience > 0 ? `${institute.yearsOfExperience}+ years exp.` : '0+ years exp.'}</span>
-              </div>
-
               <div className={`flex items-center gap-1.5 text-sm text-[var(--gray-600)] ${!(institute.totalStudentsEnrolled > 0 && isAuthenticated) ? 'invisible' : ''}`}>
                 <Users className="w-4 h-4 text-[var(--gray-400)]" />
                 <span>{institute.totalStudentsEnrolled > 0 ? `${institute.totalStudentsEnrolled.toLocaleString()}+ students` : '0+ students'}</span>
@@ -146,16 +170,21 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
 
             {/* Amenities */}
             <div className={`mt-4 flex flex-wrap items-center gap-2 ${!isAuthenticated ? 'invisible' : ''}`}>
-              {amenities.map((amenity) => (
-                <div
-                  key={amenity.label}
-                  className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--gray-50)] rounded-lg text-sm text-[var(--gray-600)]"
-                >
-                  <amenity.icon className="w-3.5 h-3.5 text-[var(--gray-400)]" />
-                  {amenity.label}
-                </div>
-              ))}
-              <span className="text-sm text-[var(--gray-400)]">+ more</span>
+              {displayedAmenities.map((amenity) => {
+                const Icon = amenity.icon;
+                return (
+                  <div
+                    key={amenity.key}
+                    className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--gray-50)] rounded-lg text-sm text-[var(--gray-600)]"
+                  >
+                    <Icon className="w-3.5 h-3.5 text-[var(--gray-400)]" />
+                    {amenity.label}
+                  </div>
+                );
+              })}
+              {moreCount > 0 && (
+                <span className="text-sm text-[var(--gray-400)]">+ {moreCount} more</span>
+              )}
             </div>
           </div>
 
