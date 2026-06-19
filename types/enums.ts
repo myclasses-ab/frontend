@@ -29,6 +29,7 @@ export enum InquirySource {
   CHAT = 'CHAT',
   CALLBACK_REQUEST = 'CALLBACK_REQUEST',
   DIRECT = 'DIRECT',
+  BOOK_DEMO = 'BOOK_DEMO',
 }
 
 export enum InquiryStatus {
@@ -131,28 +132,4 @@ export enum UserRole {
 export enum VoteType {
   HELPFUL = 'HELPFUL',
   NOT_HELPFUL = 'NOT_HELPFUL',
-}
-
-export enum LeadSource {
-  SEARCH = 'SEARCH',
-  INSTITUTE_DETAIL = 'INSTITUTE_DETAIL',
-  COURSE_DETAIL = 'COURSE_DETAIL',
-  COMPARE = 'COMPARE',
-}
-
-export enum LeadStatus {
-  NEW = 'NEW',
-  CONTACTED = 'CONTACTED',
-  QUALIFIED = 'QUALIFIED',
-  SENT_TO_INSTITUTE = 'SENT_TO_INSTITUTE',
-  ENROLLED = 'ENROLLED',
-  DROPPED = 'DROPPED',
-}
-
-export enum LeadDistributionStatus {
-  PENDING = 'PENDING',
-  VIEWED = 'VIEWED',
-  CONTACTED = 'CONTACTED',
-  CONVERTED = 'CONVERTED',
-  EXPIRED = 'EXPIRED',
 }

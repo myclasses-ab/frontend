@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   InstituteHero,
@@ -18,7 +18,7 @@ import { useInstituteCourses } from '@/hooks/useCourses';
 import { useFaculty } from '@/hooks/useFaculty';
 import { useResults } from '@/hooks/useResults';
 import { useReviews, useInstituteResponses } from '@/hooks/useReviews';
-import { Branch, InstituteFacility, AwardAndRecognition, Faq } from '@/types';
+import { Branch, InstituteFacility, AwardAndRecognition, Faq, InquirySource, InquiryStatus } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { useLeadTracking } from '@/hooks/useLeadTracking';
 import { MaskedOverlay } from '@/components/auth/MaskedOverlay';
@@ -27,7 +27,8 @@ import {
   instituteFacilityApi, 
   awardAndRecognitionApi, 
   faqApi,
-  examTypeApi 
+  examTypeApi,
+  inquiryApi 
 } from '@/api';
 import {
   Award,
@@ -179,6 +180,7 @@ function CoursesTab({ instituteIdentifier, instituteName }: { instituteIdentifie
             course={course} 
             index={index}
             instituteName={instituteName}
+            instituteIdentifier={instituteIdentifier}
           />
         ))}
       </div>
@@ -190,13 +192,55 @@ function CoursesTab({ instituteIdentifier, instituteName }: { instituteIdentifie
 function CourseCardSimple({ 
   course, 
   index,
-  instituteName 
+  instituteName,
+  instituteIdentifier,
 }: { 
   course: any; 
   index: number;
   instituteName: string;
+  instituteIdentifier: string;
 }) {
   const displayName = course.customName || 'Course';
+  const params = useParams();
+  const router = useRouter();
+  const { isAuthenticated, user } = useAuth();
+  const [isBooking, setIsBooking] = useState(false);
+
+  const handleBookDemo = async () => {
+    if (!isAuthenticated || !user) {
+      router.push(`/login?redirect=/institutes/${params.slug}`);
+      return;
+    }
+
+    setIsBooking(true);
+    try {
+      await inquiryApi.create({
+        instituteIdentifier,
+        courseIdentifier: course.courseIdentifier || course.identifier || null,
+        branchIdentifier: null,
+        userIdentifier: user.identifier,
+        name: user.fullName || '',
+        phone: user.phone || '',
+        email: user.email || '',
+        standard: '',
+        targetExam: '',
+        message: `Book a demo request for ${displayName}`,
+        source: InquirySource.BOOK_DEMO,
+        status: InquiryStatus.NEW,
+        assignedTo: null,
+        instituteNotes: null,
+        utmSource: '',
+        utmMedium: '',
+        utmCampaign: '',
+      });
+      alert('Demo request sent! The institute will contact you soon.');
+    } catch (err) {
+      console.error('Failed to book demo:', err);
+      alert('Failed to send demo request. Please try again.');
+    } finally {
+      setIsBooking(false);
+    }
+  };
 
   return (
     <motion.div
@@ -267,15 +311,13 @@ function CourseCardSimple({
         </div>
       </div>
 
-      {/* Enquiry Button - always at bottom */}
+      {/* Book a Demo Button - always at bottom */}
       <button
-        onClick={() => {
-          // TODO: Implement enquiry functionality
-          console.log('Enquiry for:', displayName, 'at', instituteName);
-        }}
-        className="w-full mt-auto pt-4 py-2.5 bg-[var(--primary)] text-white font-medium rounded-xl hover:bg-[var(--primary-600)] transition-colors"
+        onClick={handleBookDemo}
+        disabled={isBooking}
+        className="w-full mt-auto pt-4 py-2.5 bg-[var(--primary)] text-white font-medium rounded-xl hover:bg-[var(--primary-600)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Enquire
+        {isBooking ? 'Sending...' : 'Book a Demo'}
       </button>
     </motion.div>
   );

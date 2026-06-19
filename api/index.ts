@@ -61,6 +61,3 @@ export { faqApi } from './notification/faq';
 export { authApi } from './auth';
 export type { PhoneAuthResponse } from './auth';
 
-// Lead Tracking
-export { leadApi } from './leads/lead';
-export type { CreateLeadRequest } from './leads/lead';
