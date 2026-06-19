@@ -77,11 +77,8 @@ export function InstituteBranches({ branches }: InstituteBranchesProps) {
                 <div>
                   <p className="text-sm text-[var(--gray-500)] mb-1">Address</p>
                   <p className="text-[var(--gray-800)] font-medium">
-                    {branch.addressLine1}
+                    {branch.address}
                   </p>
-                  {branch.addressLine2 && (
-                    <p className="text-[var(--gray-600)]">{branch.addressLine2}</p>
-                  )}
                   {branch.landmark && (
                     <p className="text-sm text-[var(--gray-500)] mt-1">
                       Landmark: {branch.landmark}
@@ -91,33 +88,6 @@ export function InstituteBranches({ branches }: InstituteBranchesProps) {
                     {branch.cityName}, {branch.state} - {branch.pincode}
                   </p>
                 </div>
-
-                {/* Infrastructure */}
-                {(branch.totalClassrooms || branch.seatingCapacity) && (
-                  <div className="flex flex-wrap gap-3 pt-3 border-t border-[var(--gray-100)]">
-                    {branch.totalClassrooms > 0 && (
-                      <div className="px-3 py-1.5 bg-[var(--gray-100)] rounded-lg">
-                        <span className="text-sm text-[var(--gray-600)]">
-                          {branch.totalClassrooms} Classrooms
-                        </span>
-                      </div>
-                    )}
-                    {branch.seatingCapacity > 0 && (
-                      <div className="px-3 py-1.5 bg-[var(--gray-100)] rounded-lg">
-                        <span className="text-sm text-[var(--gray-600)]">
-                          {branch.seatingCapacity} Seats
-                        </span>
-                      </div>
-                    )}
-                    {branch.totalAreaSqft > 0 && (
-                      <div className="px-3 py-1.5 bg-[var(--gray-100)] rounded-lg">
-                        <span className="text-sm text-[var(--gray-600)]">
-                          {branch.totalAreaSqft.toLocaleString()} sq.ft
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
               </div>
 
               {/* Contact & Hours */}

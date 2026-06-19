@@ -70,12 +70,4 @@ export const branchApi = {
     const response = await axios.get<Branch[]>('/branches/online-only');
     return response.data;
   },
-
-  /**
-   * Find active branches
-   */
-  findActive: async (): Promise<Branch[]> => {
-    const response = await axios.get<Branch[]>('/branches/active');
-    return response.data;
-  },
 };
