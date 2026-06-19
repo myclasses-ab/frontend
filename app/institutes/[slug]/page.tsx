@@ -238,7 +238,7 @@ function CourseCardSimple({
       </div>
 
       {/* Content - grows to fill space */}
-      <div className="flex-1">
+      <div className="flex-1 mb-4">
         {/* Features from CourseCurriculum */}
         <CourseCurriculum
           features={{

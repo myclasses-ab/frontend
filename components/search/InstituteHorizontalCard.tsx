@@ -26,7 +26,6 @@ import { Institute, InstituteType } from '@/types';
 import { instituteBannerUrl, FALLBACK_BANNER_URL } from '@/components/helper/imageHelper';
 import { SafeImg } from '@/components/helper/SafeImage';
 import { useAuth } from '@/context/AuthContext';
-import { MaskedText } from '@/components/auth/MaskedOverlay';
 
 interface InstituteHorizontalCardProps {
   institute: Institute;
@@ -128,48 +127,40 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg lg:text-xl font-bold text-[var(--gray-900)] line-clamp-1 group-hover:text-[var(--primary)] transition-colors">
-                  {isAuthenticated ? institute.name : <MaskedText>Institute Name Hidden</MaskedText>}
+                  {institute.name}
                 </h3>
                 <p className="mt-1 text-sm text-[var(--gray-500)] line-clamp-1">
-                  {isAuthenticated ? (institute.tagline || 'Top coaching institute') : <span className="invisible">Placeholder tagline</span>}
+                  {institute.tagline || 'Top coaching institute'}
                 </p>
               </div>
-              <span className={`px-2.5 py-1 text-xs font-medium rounded-lg border flex-shrink-0 ${getTypeColor(institute.type)} ${!isAuthenticated ? 'invisible' : ''}`}>
+              <span className={`px-2.5 py-1 text-xs font-medium rounded-lg border flex-shrink-0 ${getTypeColor(institute.type)}`}>
                 {getTypeLabel(institute.type)}
               </span>
             </div>
 
             {/* Rating & Info */}
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              {isAuthenticated ? (
-                rating > 0 ? (
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 rounded-lg">
-                    <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                    <span className="text-sm font-semibold text-amber-700">{rating.toFixed(1)}</span>
-                    <span className="text-xs text-amber-600">({institute.totalReviews || 0} Reviews)</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--gray-100)] rounded-lg">
-                    <Star className="w-4 h-4 text-[var(--gray-400)]" />
-                    <span className="text-sm text-[var(--gray-500)]">No ratings yet</span>
-                  </div>
-                )
-              ) : (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 rounded-lg blur-[4px] select-none">
+              {rating > 0 ? (
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 rounded-lg">
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  <span className="text-sm font-semibold text-amber-700">4.5</span>
-                  <span className="text-xs text-amber-600">(120 Reviews)</span>
+                  <span className="text-sm font-semibold text-amber-700">{rating.toFixed(1)}</span>
+                  <span className="text-xs text-amber-600">({institute.totalReviews || 0} Reviews)</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--gray-100)] rounded-lg">
+                  <Star className="w-4 h-4 text-[var(--gray-400)]" />
+                  <span className="text-sm text-[var(--gray-500)]">No ratings yet</span>
                 </div>
               )}
 
-              <div className={`flex items-center gap-1.5 text-sm text-[var(--gray-600)] ${!(institute.totalStudentsEnrolled > 0 && isAuthenticated) ? 'invisible' : ''}`}>
+              <div className="flex items-center gap-1.5 text-sm text-[var(--gray-600)]">
                 <Users className="w-4 h-4 text-[var(--gray-400)]" />
                 <span>{institute.totalStudentsEnrolled > 0 ? `${institute.totalStudentsEnrolled.toLocaleString()}+ students` : '0+ students'}</span>
               </div>
             </div>
 
             {/* Amenities */}
-            <div className={`mt-4 flex flex-wrap items-center gap-2 ${!isAuthenticated ? 'invisible' : ''}`}>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
               {displayedAmenities.map((amenity) => {
                 const Icon = amenity.icon;
                 return (
@@ -202,7 +193,7 @@ export function InstituteHorizontalCard({ institute, index = 0 }: InstituteHoriz
               }
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--primary)] hover:bg-[var(--primary-700)] text-white font-medium rounded-xl transition-colors"
             >
-              {isAuthenticated ? 'View Details' : 'Unlock'}
+              {isAuthenticated ? 'View Details' : 'Login'}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
