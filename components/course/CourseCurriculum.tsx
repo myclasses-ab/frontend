@@ -12,7 +12,6 @@ interface CourseCurriculumProps {
   features?: {
     studyMaterialIncluded?: boolean;
     testSeriesIncluded?: boolean;
-    onlineClassesAvailable?: boolean;
     recordedLecturesAvailable?: boolean;
   };
 }
@@ -24,7 +23,6 @@ export function CourseCurriculum({ features }: CourseCurriculumProps) {
   const featureList = [
     { key: 'studyMaterialIncluded', label: 'Study Material', sublabel: 'Included', icon: BookOpen, color: 'green' },
     { key: 'testSeriesIncluded', label: 'Test Series', sublabel: 'Included', icon: FileText, color: 'blue' },
-    { key: 'onlineClassesAvailable', label: 'Live Classes', sublabel: 'Online', icon: Target, color: 'purple' },
     { key: 'recordedLecturesAvailable', label: 'Recorded', sublabel: '24/7', icon: Clock, color: 'amber' },
   ] as const;
 

@@ -11,7 +11,6 @@ import {
   ChevronRight,
   Award,
   Sparkles,
-  Monitor,
   Video,
   FileText,
   Calendar,
@@ -27,15 +26,12 @@ interface CourseCardProps {
 export function CourseCard({ course, index = 0, showInstitute = false }: CourseCardProps) {
   const {
     customName,
-    feeMin,
-    feeMax,
-    feeDescription,
+    fee,
     durationMonths,
     scholarshipAvailable,
     scholarshipDetails,
     studyMaterialIncluded,
     testSeriesIncluded,
-    onlineClassesAvailable,
     recordedLecturesAvailable,
     admissionOpen,
     institute,
@@ -104,26 +100,11 @@ export function CourseCard({ course, index = 0, showInstitute = false }: CourseC
           </p>
         )}
 
-        {/* Description */}
-        {feeDescription && (
-          <p className="text-sm text-[var(--gray-500)] line-clamp-1 mb-3">
-            {feeDescription}
-          </p>
-        )}
-
         {/* Fee Display */}
         <div className="flex items-baseline gap-1 mb-4">
           <span className="text-2xl font-bold text-[var(--gray-900)]">
-            {formatFee(feeMin)}
+            {formatFee(fee)}
           </span>
-          {Number(feeMax) > Number(feeMin) && (
-            <>
-              <span className="text-[var(--gray-400)]">-</span>
-              <span className="text-lg font-semibold text-[var(--gray-700)]">
-                {formatFee(feeMax)}
-              </span>
-            </>
-          )}
           <span className="text-xs text-[var(--gray-500)] ml-1">/year</span>
         </div>
 
@@ -148,12 +129,7 @@ export function CourseCard({ course, index = 0, showInstitute = false }: CourseC
             </div>
           )}
 
-          {onlineClassesAvailable && (
-            <div className="flex items-center gap-1.5 text-sm text-[var(--gray-600)]">
-              <Monitor className="w-4 h-4 text-[var(--primary)]" />
-              <span className="text-[var(--primary)]">Live Classes</span>
-            </div>
-          )}
+
 
           {recordedLecturesAvailable && (
             <div className="flex items-center gap-1.5 text-sm text-[var(--gray-600)]">

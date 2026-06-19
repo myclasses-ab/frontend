@@ -7,13 +7,10 @@ import {
   CheckCircle2,
   XCircle,
   Sparkles,
-  Info,
 } from 'lucide-react';
 
 interface FeeDisplayProps {
-  feeMin: number | string;
-  feeMax: number | string;
-  feeDescription?: string;
+  fee: number | string;
   scholarshipAvailable?: boolean;
   scholarshipDetails?: string;
   durationMonths?: number;
@@ -21,17 +18,13 @@ interface FeeDisplayProps {
 }
 
 export function FeeDisplay({
-  feeMin,
-  feeMax,
-  feeDescription,
+  fee,
   scholarshipAvailable,
   scholarshipDetails,
   durationMonths,
   showMonthlyBreakdown = true,
 }: FeeDisplayProps) {
-  const minFee = Number(feeMin) || 0;
-  const maxFee = Number(feeMax) || 0;
-  const hasRange = maxFee > minFee;
+  const courseFee = Number(fee) || 0;
 
   // Format fee for display
   const formatFee = (fee: number) => {
@@ -56,11 +49,10 @@ export function FeeDisplay({
     };
   };
 
-  const minFeeFormatted = formatFee(minFee);
-  const maxFeeFormatted = formatFee(maxFee);
+  const feeFormatted = formatFee(courseFee);
 
   // Calculate monthly fee
-  const monthlyFee = durationMonths && durationMonths > 0 ? minFee / durationMonths : 0;
+  const monthlyFee = durationMonths && durationMonths > 0 ? courseFee / durationMonths : 0;
   const monthlyFeeFormatted = formatFee(Math.round(monthlyFee));
 
   return (
@@ -78,29 +70,15 @@ export function FeeDisplay({
         <div className="text-center">
           <div className="flex items-baseline justify-center gap-1">
             <span className="text-4xl sm:text-5xl font-bold text-[var(--gray-900)]">
-              ₹{minFeeFormatted.value}
+              ₹{feeFormatted.value}
             </span>
             <span className="text-2xl font-semibold text-[var(--gray-600)]">
-              {minFeeFormatted.unit}
+              {feeFormatted.unit}
             </span>
           </div>
-          
-          {hasRange && (
-            <p className="text-[var(--gray-500)] mt-1">
-              upto ₹{maxFeeFormatted.full}
-            </p>
-          )}
           
           <p className="text-sm text-[var(--gray-400)] mt-1">per year</p>
         </div>
-
-        {/* Fee Description */}
-        {feeDescription && (
-          <div className="flex items-start gap-2 p-3 bg-[var(--gray-50)] rounded-xl">
-            <Info className="w-4 h-4 text-[var(--gray-400)] mt-0.5 shrink-0" />
-            <p className="text-sm text-[var(--gray-600)]">{feeDescription}</p>
-          </div>
-        )}
 
         {/* Monthly Breakdown */}
         {showMonthlyBreakdown && durationMonths && (
@@ -166,15 +144,12 @@ export function FeeDisplay({
 
 // Compact fee display for cards and lists
 interface FeeBadgeProps {
-  feeMin: number | string;
-  feeMax?: number | string;
+  fee: number | string;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function FeeBadge({ feeMin, feeMax, size = 'md' }: FeeBadgeProps) {
-  const minFee = Number(feeMin) || 0;
-  const maxFee = feeMax ? Number(feeMax) : 0;
-  const hasRange = maxFee > minFee;
+export function FeeBadge({ fee, size = 'md' }: FeeBadgeProps) {
+  const courseFee = Number(fee) || 0;
 
   const formatFee = (fee: number) => {
     if (fee >= 100000) {
@@ -195,10 +170,7 @@ export function FeeBadge({ feeMin, feeMax, size = 'md' }: FeeBadgeProps) {
   return (
     <span className={`inline-flex items-center gap-1 font-semibold bg-green-100 text-green-700 rounded-full ${sizeClasses[size]}`}>
       <IndianRupee className={size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-4 h-4' : 'w-3.5 h-3.5'} />
-      {formatFee(minFee)}
-      {hasRange && (
-        <span className="text-green-600 font-normal">- {formatFee(maxFee)}</span>
-      )}
+      {formatFee(courseFee)}
     </span>
   );
 }

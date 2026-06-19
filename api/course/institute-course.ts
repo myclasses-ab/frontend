@@ -63,11 +63,4 @@ export const instituteCourseApi = {
     return response.data;
   },
 
-  /**
-   * Find active institute courses
-   */
-  findActive: async (): Promise<InstituteCourse[]> => {
-    const response = await axios.get<InstituteCourse[]>('/institute-courses/active');
-    return response.data;
-  },
 };

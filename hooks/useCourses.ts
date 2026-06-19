@@ -131,11 +131,11 @@ export function useCourseFilters(courses: EnrichedInstituteCourse[]) {
       }
 
       // Fee range filter
-      const feeMin = Number(ic.feeMin) || 0;
-      if (filters.minFee !== null && feeMin < filters.minFee) {
+      const fee = Number(ic.fee) || 0;
+      if (filters.minFee !== null && fee < filters.minFee) {
         return false;
       }
-      if (filters.maxFee !== null && feeMin > filters.maxFee) {
+      if (filters.maxFee !== null && fee > filters.maxFee) {
         return false;
       }
 

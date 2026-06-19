@@ -114,7 +114,7 @@ export function useSearch(query: string): UseSearchReturn {
 
     // Apply course filters
     if (filters.maxFees !== null) {
-      courses = courses.filter((c) => Number(c.feeMax) <= filters.maxFees!);
+      courses = courses.filter((c) => Number(c.fee) <= filters.maxFees!);
     }
 
     // Filter faculty

@@ -1,18 +1,15 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   InstituteHero,
   TabNavigation,
   TabType,
-  ContactCard,
   InstituteFacilities,
   InstituteBranches,
   EmptyState,
-  BookmarkButton,
-  ShareButton,
   SimilarInstitutes,
   InquiryForm,
 } from '@/components/institute';
@@ -21,13 +18,10 @@ import { useInstituteCourses } from '@/hooks/useCourses';
 import { useFaculty } from '@/hooks/useFaculty';
 import { useResults } from '@/hooks/useResults';
 import { useReviews, useInstituteResponses } from '@/hooks/useReviews';
-import { useComparison } from '@/hooks/useComparison';
-import { useEffect } from 'react';
-import { BookmarkEntityType } from '@/types';
+import { Branch, InstituteFacility, AwardAndRecognition, Faq } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 import { useLeadTracking } from '@/hooks/useLeadTracking';
 import { MaskedOverlay } from '@/components/auth/MaskedOverlay';
-import { Branch, InstituteFacility, AwardAndRecognition, Faq, Result, Review } from '@/types';
 import { 
   branchApi, 
   instituteFacilityApi, 
@@ -40,31 +34,21 @@ import {
   Building2,
   CheckCircle,
   BookOpen,
-  GraduationCap,
-  Users,
   ChevronRight,
-  Clock,
   Sparkles,
   Trophy,
   MessageSquare,
   HelpCircle,
   Filter,
   PenSquare,
-  X,
-  Scale,
-  Bookmark,
-  Share2,
-  Send,
-  Info,
   Lock,
 } from 'lucide-react';
 import Link from 'next/link';
 import {
   CourseCardSkeleton,
   CourseCurriculum,
-  FeeDisplay,
 } from '@/components/course';
-import { FacultyCard, FacultyGrid } from '@/components/faculty';
+import { FacultyGrid } from '@/components/faculty';
 import {
   ResultCard,
   ResultsStats,
@@ -244,7 +228,6 @@ function CourseCardSimple({
           features={{
             studyMaterialIncluded: course.studyMaterialIncluded,
             testSeriesIncluded: course.testSeriesIncluded,
-            onlineClassesAvailable: course.onlineClassesAvailable,
             recordedLecturesAvailable: course.recordedLecturesAvailable,
           }}
         />
@@ -253,16 +236,11 @@ function CourseCardSimple({
         <div className="mt-4 pt-4 border-t border-[var(--gray-100)] space-y-3">
         {/* Fee Amount */}
         <div className="flex items-baseline gap-2">
-          {course.feeMin ? (
+          {course.fee ? (
             <>
               <span className="text-2xl font-bold text-[var(--gray-900)]">
-                ₹{course.feeMin.toLocaleString()}
+                ₹{Number(course.fee).toLocaleString()}
               </span>
-              {course.feeMax && course.feeMax !== course.feeMin && (
-                <span className="text-sm text-[var(--gray-500)]">
-                  - ₹{course.feeMax.toLocaleString()}
-                </span>
-              )}
               {course.durationMonths && (
                 <span className="text-xs text-[var(--gray-400)] ml-1">
                   / {course.durationMonths} months
@@ -273,13 +251,6 @@ function CourseCardSimple({
             <span className="text-lg font-medium text-[var(--gray-500)]">Contact for fee details</span>
           )}
         </div>
-
-        {/* Fee Description */}
-        {course.feeDescription && (
-          <p className="text-sm text-[var(--gray-600)] bg-[var(--gray-50)] p-3 rounded-lg">
-            {course.feeDescription}
-          </p>
-        )}
 
         {/* Scholarship */}
         {course.scholarshipAvailable && (
@@ -758,7 +729,6 @@ export default function InstituteDetailPage() {
   const [showInquiryForm, setShowInquiryForm] = useState(false);
   
   const { institute, isLoading, error } = useInstitute(slug);
-  const { isInComparison, addToComparison, removeFromComparison } = useComparison();
   const { isAuthenticated } = useAuth();
   const { trackInstituteVisit } = useLeadTracking();
   
@@ -766,7 +736,6 @@ export default function InstituteDetailPage() {
   const [facility, setFacility] = useState<InstituteFacility | null>(null);
   const [awards, setAwards] = useState<AwardAndRecognition[]>([]);
   const [faqs, setFaqs] = useState<Faq[]>([]);
-  const [isDataLoading, setIsDataLoading] = useState(true);
 
   // Track institute visit
   useEffect(() => {
@@ -780,7 +749,6 @@ export default function InstituteDetailPage() {
     if (!institute) return;
 
     const fetchRelatedData = async () => {
-      setIsDataLoading(true);
       try {
         const [branchesData, facilityData, awardsData, faqsData] = await Promise.all([
           branchApi.findByInstituteIdentifier(institute.identifier).catch(() => []),
@@ -795,8 +763,6 @@ export default function InstituteDetailPage() {
         setFaqs(faqsData);
       } catch (err) {
         console.error('Error fetching related data:', err);
-      } finally {
-        setIsDataLoading(false);
       }
     };
 
